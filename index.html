@@ -73,7 +73,7 @@ header {
   z-index: 1000;
   font-size: 14px;
   box-shadow: 0 0 15px rgba(0,0,0,0.4);
-  animation: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 // 申し込めた後のポップアップ
@@ -91,7 +91,7 @@ header {
   font-size: 14px;
   font-weight: bold;
   box-shadow: 0 0 30px rgba(255, 64, 129, 0.6);
-  animation: boomFade 0.8s ease-in-out;
+  transition: boomFade 0.8s ease-in-out;
 }
 
 
@@ -221,7 +221,7 @@ header {
   }
 
   .sparkle-effect {
-    animation: sparkle 0.5s ease-in-out;
+    transition: sparkle 0.5s ease-in-out;
   }
 
   #apply-form input,
@@ -315,7 +315,7 @@ header {
 <img id="tsubasa-img" src="https://github.com/kamaruri/public-assets/blob/main/%E8%83%8C%E4%B8%AD%E3%82%92%E5%90%91%E3%81%91%E3%81%9F%E9%81%B8%E6%89%8B%E3%81%A7%E5%B7%A6%E5%8F%B3%E3%81%AB%E8%83%8C%E6%99%AF%E3%81%82%E3%82%8Apng.jpg?raw=true" alt="火星野つばさ" style="max-width: 100%;">
 
 
-    <div class="popup" id="popup-msg">背中を押しました！「応援するよ」とLINEに送ろう！</div>
+    <div class="popup" id="form-msg">背中を押しました！「応援するよ」とLINEに送ろう！</div>
 
 
     <div class="interview">
@@ -380,6 +380,11 @@ header {
   </main>
 
  <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const img = document.getElementById("tsubasa-img");
+    const popup = document.querySelector(".popup");
+
+    if (!popup || !img) return;
 
 let swipeCount = 0;
 const shoes = document.getElementById("shoes-img");
@@ -448,12 +453,13 @@ function cleanShoes() {
   flashScreenEffect();
 }
 
-function showPopup(target) {
-  target.style.display = "block";
+function showPopup(popupElement) {
+  popupElement.style.display = "block";
   setTimeout(() => {
-    target.style.display = "none";
-  }, 7500); // 7.5秒表示
+    popupElement.style.display = "none";
+  }, 3000); // 3秒後に非表示
 }
+
 
 // 背番号の範囲判定（画像中央30%×40%エリアなど）
 function isInTargetArea(event, element) {
@@ -526,20 +532,6 @@ function flashScreenEffect() {
     document.body.classList.remove("sparkle-effect");
   }, 500);
 }
-
-// 読み込み失敗時の対応
-  const shoesImg = document.getElementById("shoes-img");
-  const errorDiv = document.getElementById("image-error");
-
-  // 読み込み成功
-  shoesImg.addEventListener("load", () => {
-    errorDiv.style.display = "none";
-  });
-
-  // 読み込み失敗
-  shoesImg.addEventListener("error", () => {
-    errorDiv.style.display = "block";
-  });
 
   const images = Array.from(document.querySelectorAll("img"));
   let loadedCount = 0;
