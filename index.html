@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, orientation=portrait">
+  <title>火星野つばさ 応援サイト</title>
+  <style>
+    body {
+        height: auto;
+      min-height: 100%;
+      background: linear-gradient(to bottom, #ffe0e0, #f0f8ff); /* 朝焼け風グラデーション */
+      font-family: sans-serif;
+      margin: 0;
+      color: #333;
+      font-size: 14px;
+
+    }
+
+header {
+  position: fixed;         /* ← 追加 */
+  top: 0;                  /* ← 追加 */
+  width: 100%;             /* ← 追加 */
+  background-color: #e8f5e9;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  z-index: 1000;           /* ← 前面に出すために推奨 */
+}
+
+
+    main {
+      padding-top: 80px; /* ← header の高さ分余白を入れる */
+      max-width: 800px;
+      margin: auto;
+    }
+
+    a.link-button {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background-color: #d50000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    h1, h2 {
+      font-family: 'Shippori Mincho', serif;
+      color: #c2185b;
+    }
+
+    img {
+      font-family: 'BIZ UDPGothic', sans-serif;
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+// 背中押した後のポップアップ
+.popup {
+  font-family: 'Noto Serif JP', serif;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(34, 34, 34, 0.95);
+  color: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  display: none;
+  z-index: 1000;
+  font-size: 24px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  animation: all 0.2s ease-in;
+}
+
+// 申し込めた後のポップアップ
+.form-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.1);
+  background: linear-gradient(135deg, #ff4081, #fce4ec);
+  color: #222;
+  padding: 30px 40px;
+  border-radius: 20px;
+  display: none;
+  z-index: 2001;
+  font-size: 28px;
+  font-weight: bold;
+  box-shadow: 0 0 30px rgba(255, 64, 129, 0.6);
+  animation: boomFade 0.8s ease-in-out;
+}
+
+
+@keyframes boomFade {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.0);
+  }
+}
+
+
+
+     .interview img { 
+      font-family: 'Noto Serif JP', serif;
+  margin-bottom: 20px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+  .school {
+    font-family: 'Noto Serif JP', serif;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background-color: #e3f2fd;
+    padding: 20px;
+    border-radius: 12px;
+    z-index: 2000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    transition: transform 0.4s ease, opacity 0.4s;
+    opacity: 0;
+  }
+
+
+  .school.visible {
+    font-family: 'Noto Serif JP', serif;
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    font-size: 25px;
+  }
+
+.green-bg {
+  background: linear-gradient(to bottom, #e8f5e9, #f1f8e9); 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+    form {
+      margin-top: 20px;
+        font-size: 16px;
+      display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+    }
+
+    input[type="text"] {
+      font-size: 16px; 
+      padding: 8px;
+      width: 80%;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+
+    button {
+      background-color: #00796b;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+  #tsubasa-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+  
+
+  .disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* シューズや肉や石の画像スタイル */
+#meat-img,
+#stone-img,
+#shoes-img {
+    display: inline;
+    height: 2em;
+    vertical-align: middle;
+   -webkit-touch-callout: none; /* iOS Safariの長押しメニューを防ぐ */
+  user-select: none;           /* テキスト選択の禁止 */
+}
+
+
+
+  @keyframes sparkle {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: rgba(255, 255, 200, 0.4); }
+  }
+
+  .sparkle-effect {
+    animation: sparkle 0.5s ease-in-out;
+  }
+
+  #apply-form input,
+  #apply-form button,
+  #apply-form label,
+  #close-school  {
+    font-size: 25px;
+  }
+
+#soccer-ball {
+  position: absolute;
+  font-size: 28px;
+  z-index: 1001;
+  transition: all 1.8s ease;
+}
+
+.step-1 { top: 0px; left: 0px; transform:rotate(360deg); }            
+.step-2 { top: 0px; left: calc(100% - 50px); transform:rotate(360deg);  } 
+.step-3 { bottom: 0px;  left: calc(100% - 50px); transform:rotate(360deg); }  
+
+
+.floating-nav {
+  position: static ;
+  bottom: 20px;
+  right: 20px;
+  background: #fff4f4;
+  border-radius: 20px;
+  padding: 10px 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-size: 20px;
+}
+
+.x-mark1 {
+  position: absolute;
+  font-size: 24px;
+  z-index: 1000;
+  top: 20px; 
+  left: 0px;
+}
+
+.x-mark2 {
+  position: absolute;
+  font-size: 24px;
+  z-index: 1000;
+  top: 820px;
+  left:calc(100% - 50px);
+}
+
+.x-mark3 {
+  position: absolute;
+  font-size: 24px;
+  z-index: 1000;
+  top: 780px; 
+  left:0px;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    ⚠️このサイトは架空の応援サイトです。<br>
+    ただし <a href="https://inac-kobe.com/player" target="_blank">INAC神戸レオネッサ選手紹介ページ</a> は実在します。
+  </header>
+
+  <div id="soccer-ball">⚽</div>
+<div id="x1" class="x-mark1">🙅‍♂️</div> <!-- step-1の真下 -->
+<div id="x3" class="x-mark2">🙅‍♂️</div> <!-- step-3の真下 -->
+<div id="x4" class="x-mark3">🙅‍♂️</div> <!-- step-4の真上 -->
+
+
+  <main>
+    <h1>INAC神戸レオネッサの世界へようこそ！</h1>
+
+    <p>
+      日本女子サッカー界で名門と呼ばれる <strong>INAC神戸レオネッサ</strong>。<br>
+      そのプレースタイルは華麗かつ力強く、観る者を惹きつけます。<br>
+      スピード感のある攻撃、粘り強い守備、そしてなにより「チームとして戦う美しさ」が魅力です。
+    </p>
+    <p>
+      「女子サッカーって、こんなにすごいんだ」<br>
+      そんな感動を、あなたにも感じてほしい。<br>
+      まずはリンク先の公式サイトで、選手たちの姿をのぞいてみてください！
+    </p>
+
+        <a class="link-button" href="https://inac-kobe.com/player" target="_blank">
+      ▶︎ INAC神戸の選手紹介ページを見る
+    </a>
+    
+<img id="tsubasa-img" src="https://github.com/kamaruri/public-assets/blob/main/%E8%83%8C%E4%B8%AD%E3%82%92%E5%90%91%E3%81%91%E3%81%9F%E9%81%B8%E6%89%8B%E3%81%A7%E5%B7%A6%E5%8F%B3%E3%81%AB%E8%83%8C%E6%99%AF%E3%81%82%E3%82%8Apng.jpg?raw=true" alt="火星野つばさ" style="max-width: 100%;">
+
+
+    <div class="popup" id="popup-msg">背中を押しました！「応援するよ」とLINEに送ろう！</div>
+
+
+    <div class="interview">
+      <h2>「その一歩を、信じてほしい」 </h2>
+      <p><strong>女子サッカー選手・火星野 つばさ（かせいの つばさ）</strong></p>
+      <p>――夢に向かう人たちへ、何を伝えたいですか？</p>
+
+      <p>🦁私はひとりではここまで走れなかった。<br>
+      エネルギーが切れそうな時、<br>
+      誰かの言葉が力になることがある。<img id="meat-img" class="disabled" src="https://github.com/kamaruri/public-assets/blob/main/%E9%AA%A8%E4%BB%98%E3%81%8D%E8%82%89.jpg?raw=true" alt="肉" style="vertical-align: middle; display: inline;"></p>
+
+      <p>私は🦁信じてくれるひとがいるだけで、前に進めた。<br>
+      シュートを外してくじけたときも、立ち上がってプレーできた。<br>
+
+      ひとりじゃないから走り続けるという強い意志を持つことができた！<img id="stone-img" class="disabled" src="https://github.com/kamaruri/public-assets/blob/main/%E7%9F%B3%E3%81%AE%E6%84%8F%E5%BF%97.jpg?raw=true" alt="石" style="vertical-align: middle; display: inline;"> <br>
+      </p>
+
+      <p>私が一度膝を壊して、もう復帰は絶望的だったとき<br>
+      恩師のこの教えが私のサッカー人生をリスタートさせてくれた！<br>
+      『 行き詰ったときは、まず汚れた道具を何度も磨き、<br>
+      肉を食らい体を作り、石を拾い運も拾いなさい 』</p>
+
+      <p>恩師だけじゃなくて、家族や仲間、サポーターのみなさん<br>
+      みんなの応援🦁が背中を押してくれた！<br>
+      みんなもゴールを目指して一緒に走ろうよ！ <img id="shoes-img"  src="https://github.com/kamaruri/public-assets/blob/main/shoes_kusai.jpg?raw=true"
+       alt="シューズ"
+       style="vertical-align: middle; display: inline;"></p>
+       </div>
+<div id="image-error" style="display:none; color:red; margin-top:1em;">
+  画像の読み込みに失敗しました。<br>
+  通信環境が不安定な可能性があります。<br>
+  <button onclick="location.reload()">ページを再読み込みする</button>
+</div>
+
+ <div class="interview green-bg">
+
+      <h2>🔥サッカースクールに参加しよう！</h2>
+      <p><strong>このスクールは、君がプロを目指すためのスタートラインだ！！</strong></p>
+      <p>
+        ◆練習時間：毎週水・土曜 16:00〜18:00<br>
+        ◆対象年齢：小学生〜中学生<br>
+        ◆場所：神戸市内の指定グラウンド（詳細はメール連絡）<br>
+        ◆参加費：無料（初回体験）<br>
+      </p>
+    </div>
+
+    <div class="school">
+      <h2>🔥サッカースクールに参加しよう！</h2>
+      <p><strong>このスクールは、君がプロを目指すためのスタートラインだ！！</strong></p>
+      <p>
+        ◆練習時間：毎週水・土曜 16:00〜18:00<br>
+        ◆対象年齢：小学生〜中学生<br>
+        ◆場所：神戸市内の指定グラウンド（詳細はメール連絡）<br>
+        ◆参加費：無料（初回体験）<br>
+      </p>
+
+      <form id="apply-form">
+        <label for="name">お名前（代理人の方でもOK）:</label><br>
+        <input type="text" id="name" name="name" required><br>
+         <button type="submit">申し込む</button>
+      </form>
+      
+     <button id="close-school" style="float: right;">閉じる</button>
+
+    </div>
+
+    <div class="form-popup" id="form-msg">LINEに「スクールに申し込んだよ」と送ろう！</div>
+
+    <div class="floating-nav">応援よろしくお願いします🥅 </div>
+  </main>
+
+ <script>
+
+let swipeCount = 0;
+const shoes = document.getElementById("shoes-img");
+const meat = document.getElementById("meat-img");
+const stone = document.getElementById("stone-img");
+const schoolDiv = document.querySelector(".school");
+const closeBtn = document.getElementById("close-school");
+closeBtn.addEventListener("click", () => {
+  schoolDiv.classList.remove("visible");
+});
+
+let pressTimer;
+shoes.addEventListener("touchstart", () => {
+  pressTimer = setTimeout(() => {
+    cleanShoes();
+  }, 1000);  // 1秒長押し
+});
+
+shoes.addEventListener("touchend", () => {
+  clearTimeout(pressTimer);
+});
+
+shoes.addEventListener("touchcancel", () => {
+  clearTimeout(pressTimer);
+});
+
+// PCでも対応（マウス長押し）
+shoes.addEventListener("mousedown", () => {
+  pressTimer = setTimeout(() => {
+    cleanShoes();
+  }, 1000);
+});
+shoes.addEventListener("mouseup", () => {
+  clearTimeout(pressTimer);
+});
+shoes.addEventListener("mouseleave", () => {
+  clearTimeout(pressTimer);
+});
+
+// 肉をタップで骨に
+meat.addEventListener("click", () => {
+  if (meat.classList.contains("disabled")) return;
+  meat.src = "https://github.com/kamaruri/public-assets/blob/main/%E9%AA%A8.jpg?raw=true";
+  stone.classList.remove("disabled");
+});
+
+// 石をタップで「意志が強くなったよ！」→フォーム表示
+stone.addEventListener("click", () => {
+  if (stone.classList.contains("disabled")) return;
+  alert("意志が強くなったよ！");
+  setTimeout(() => {
+    schoolDiv.classList.add("visible");
+  }, 1500);
+});
+
+
+
+const img = document.getElementById("tsubasa-img");
+const popup = document.getElementById("popup-msg");
+const form = document.getElementById("apply-form");
+const formMsg = document.getElementById("form-msg");
+
+function cleanShoes() {
+  shoes.src = "https://github.com/kamaruri/public-assets/blob/main/shoes_%E3%81%B4%E3%81%8B%E3%81%B4%E3%81%8B.jpg?raw=true";
+  meat.classList.remove("disabled");
+  flashScreenEffect();
+}
+
+function showPopup(target) {
+  target.style.display = "block";
+  setTimeout(() => {
+    target.style.display = "none";
+  }, 7500); // 7.5秒表示
+}
+
+// 背番号の範囲判定（画像中央30%×40%エリアなど）
+function isInTargetArea(event, element) {
+  const rect = element.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  const width = rect.width;
+  const height = rect.height;
+
+  const inX = x > width * 0.35 && x < width * 0.65;
+  const inY = y > height * 0.3 && y < height * 0.7;
+
+  return inX && inY;
+}
+
+//背番号のデバイス判定
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+if (isMobile) {
+  img.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+  });
+
+  let pressTimer;
+  img.addEventListener("touchstart", (e) => {
+    const touch = e.touches[0];
+    pressTimer = setTimeout(() => {
+      if (isInTargetArea(touch, img)) {
+        showPopup(popup);
+      }
+    }, 200);
+  });
+
+  img.addEventListener("touchend", () => clearTimeout(pressTimer));
+  img.addEventListener("touchcancel", () => clearTimeout(pressTimer));
+} else {
+  img.addEventListener("click", (e) => {
+    if (isInTargetArea(e, img)) {
+      showPopup(popup);
+    }
+  });
+}
+// PCのみ: シューズ画像をダブルクリックしたら「こすった」と判定
+if (!isMobile) {
+  shoes.addEventListener("click", () => {
+    swipeCount++;
+    flashScreenEffect(); // ✨演出
+    if (swipeCount >= 1) {
+     shoes.src = "https://github.com/kamaruri/public-assets/blob/main/shoes_%E3%81%B4%E3%81%8B%E3%81%B4%E3%81%8B.jpg?raw=true";
+
+      meat.classList.remove("disabled");
+    }
+  });
+}
+
+
+
+
+// フォーム送信
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+  form.reset();
+  showPopup(formMsg);
+});
+
+function flashScreenEffect() {
+  document.body.classList.add("sparkle-effect");
+  setTimeout(() => {
+    document.body.classList.remove("sparkle-effect");
+  }, 500);
+}
+
+// 読み込み失敗時の対応
+  const shoesImg = document.getElementById("shoes-img");
+  const errorDiv = document.getElementById("image-error");
+
+  // 読み込み成功
+  shoesImg.addEventListener("load", () => {
+    errorDiv.style.display = "none";
+  });
+
+  // 読み込み失敗
+  shoesImg.addEventListener("error", () => {
+    errorDiv.style.display = "block";
+  });
+
+  const images = Array.from(document.querySelectorAll("img"));
+  let loadedCount = 0;
+
+  function checkAllLoaded() {
+    loadedCount++;
+    if (loadedCount === images.length) {
+      document.getElementById("loading").style.display = "none";
+    }
+  }
+
+  images.forEach(img => {
+    img.addEventListener("load", checkAllLoaded);
+    img.addEventListener("error", () => {
+      img.style.display = "none";  // 表示を隠す
+      document.getElementById("image-error").style.display = "block";
+    });
+  });
+
+const soccerBall = document.getElementById("soccer-ball");
+
+// 5ステップの位置クラス
+const positionSteps = ["step-1", "step-2", "step-3"];
+let currentStep = 0;
+
+// 初期位置設定
+window.addEventListener("load", () => {
+  soccerBall.classList.add(positionSteps[0]);
+});
+
+// 向き変更で次の位置へ移動
+window.addEventListener("orientationchange", () => {
+  setTimeout(() => {
+    // STEP5 以降はずっとSTEP5に留まる
+    if (currentStep >= positionSteps.length - 1) {
+      currentStep = positionSteps.length - 1;
+      return;
+    }
+
+    // 古いクラスを削除
+    positionSteps.forEach(cls => soccerBall.classList.remove(cls));
+
+    // 次のステップへ
+    currentStep++;
+    soccerBall.classList.add(positionSteps[currentStep]);
+
+    // STEP5ならフォーム表示
+    if (currentStep === 2) {
+      const schoolPopup = document.querySelector(".school");
+      if (schoolPopup) {
+        schoolPopup.classList.add("visible");
+      }
+    }
+  }, 300);
+});
+
+</script>
+
+
+</body>
+</html>
