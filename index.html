@@ -59,7 +59,7 @@ header {
     }
 
 // 背中押した後のポップアップ
-.popup {
+.form-msg {
   font-family: 'Noto Serif JP', serif;
   position: fixed;
   top: 50%;
@@ -193,7 +193,9 @@ header {
     display: block;
     margin: 0 auto;
     -webkit-touch-callout: none;
-    user-select: none;
+    -webkit-user-select: none;
+  　user-select: none;
+  　pointer-events: auto;
   }
   
 
@@ -382,7 +384,7 @@ header {
  <script>
   window.addEventListener("DOMContentLoaded", () => {
     const img = document.getElementById("tsubasa-img");
-    const popup = document.querySelector(".popup");
+    const popup = document.getElementById("form-msg");
 
     if (!popup || !img) return;
 
@@ -390,7 +392,7 @@ let swipeCount = 0;
 const shoes = document.getElementById("shoes-img");
 const meat = document.getElementById("meat-img");
 const stone = document.getElementById("stone-img");
-const schoolDiv = document.querySelector(".school");
+const schoolDiv = document.getElementById(".school");
 const closeBtn = document.getElementById("close-school");
 closeBtn.addEventListener("click", () => {
   schoolDiv.classList.remove("visible");
@@ -533,7 +535,7 @@ function flashScreenEffect() {
   }, 500);
 }
 
-  const images = Array.from(document.querySelectorAll("img"));
+  const images = Array.from(document.getElementByIdAll("img"));
   let loadedCount = 0;
 
   function checkAllLoaded() {
@@ -580,7 +582,7 @@ window.addEventListener("orientationchange", () => {
 
     // STEP5ならフォーム表示
     if (currentStep === 2) {
-      const schoolPopup = document.querySelector(".school");
+      const schoolPopup = document.getElementById(".school");
       if (schoolPopup) {
         schoolPopup.classList.add("visible");
       }
