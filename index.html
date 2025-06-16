@@ -60,7 +60,7 @@ header {
 
 /* 背中押した後のポップアップ */
 .form-msg {
-  font-family: 'Noto Serif JP', serif;
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -69,12 +69,12 @@ header {
   color: #fff;
   padding: 20px 30px;
   border-radius: 12px;
-  display: none;
-  z-index: 1000;
+  z-index: 3000;
   font-size: 14px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.4);
-  transition: all 0.2s ease-in;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  text-align: center;
 }
+
 
 /* 申し込めた後のポップアップ */
 .form-popup {
@@ -317,7 +317,9 @@ header {
 <img id="tsubasa-img" src="https://github.com/kamaruri/public-assets/blob/main/%E8%83%8C%E4%B8%AD%E3%82%92%E5%90%91%E3%81%91%E3%81%9F%E9%81%B8%E6%89%8B%E3%81%A7%E5%B7%A6%E5%8F%B3%E3%81%AB%E8%83%8C%E6%99%AF%E3%81%82%E3%82%8Apng.jpg?raw=true" alt="火星野つばさ" style="max-width: 100%;">
 
 
-    <div class="form-msg" id="form-msg">背中を押しました！「応援するよ」とLINEに送ろう！</div>
+    <div id="form-msg" class="form-msg">
+  背中を押しました！「応援するよ」とLINEに送ろう！
+</div>
 
 
     <div class="interview">
@@ -383,140 +385,51 @@ header {
 
  <script>
   window.addEventListener("DOMContentLoaded", () => {
-    const img = document.getElementById("tsubasa-img");
-    const popup = document.getElementById("form-msg");
-
-    if (!popup || !img) return;
-
-let swipeCount = 0;
-const shoes = document.getElementById("shoes-img");
-const meat = document.getElementById("meat-img");
-const stone = document.getElementById("stone-img");
-const schoolDiv = document.getElementById(".school");
-const closeBtn = document.getElementById("close-school");
-closeBtn.addEventListener("click", () => {
-  schoolDiv.classList.remove("visible");
-});
-
-let pressTimer;
-shoes.addEventListener("touchstart", () => {
-  pressTimer = setTimeout(() => {
-    cleanShoes();
-  }, 1000);  // 1秒長押し
-});
-
-shoes.addEventListener("touchend", () => {
-  clearTimeout(pressTimer);
-});
-
-shoes.addEventListener("touchcancel", () => {
-  clearTimeout(pressTimer);
-});
-
-// PCでも対応（マウス長押し）
-shoes.addEventListener("mousedown", () => {
-  pressTimer = setTimeout(() => {
-    cleanShoes();
-  }, 1000);
-});
-shoes.addEventListener("mouseup", () => {
-  clearTimeout(pressTimer);
-});
-shoes.addEventListener("mouseleave", () => {
-  clearTimeout(pressTimer);
-});
-
-// 肉をタップで骨に
-meat.addEventListener("click", () => {
-  if (meat.classList.contains("disabled")) return;
-  meat.src = "https://github.com/kamaruri/public-assets/blob/main/%E9%AA%A8.jpg?raw=true";
-  stone.classList.remove("disabled");
-});
-
-// 石をタップで「意志が強くなったよ！」→フォーム表示
-stone.addEventListener("click", () => {
-  if (stone.classList.contains("disabled")) return;
-  alert("意志が強くなったよ！");
-  setTimeout(() => {
-    schoolDiv.classList.add("visible");
-  }, 1500);
-});
-
-
-
-const img = document.getElementById("tsubasa-img");
-const popup = document.getElementById("popup-msg");
-const form = document.getElementById("apply-form");
-const formMsg = document.getElementById("form-msg");
-
-function cleanShoes() {
-  shoes.src = "https://github.com/kamaruri/public-assets/blob/main/shoes_%E3%81%B4%E3%81%8B%E3%81%B4%E3%81%8B.jpg?raw=true";
-  meat.classList.remove("disabled");
-  flashScreenEffect();
-}
-
-function showPopup(popupElement) {
-  popupElement.style.display = "block";
-  setTimeout(() => {
-    popupElement.style.display = "none";
-  }, 3000); // 3秒後に非表示
-}
-
-
-// 背番号の範囲判定（画像中央30%×40%エリアなど）
-function isInTargetArea(event, element) {
-  const rect = element.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-
-  const width = rect.width;
-  const height = rect.height;
-
-  const inX = x > width * 0.35 && x < width * 0.65;
-  const inY = y > height * 0.3 && y < height * 0.7;
-
-  return inX && inY;
-}
-
-//背番号のデバイス判定
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-if (isMobile) {
-  img.addEventListener("contextmenu", function(e) {
-    e.preventDefault();
-  });
+  const img = document.getElementById("tsubasa-img");
+  const popup = document.getElementById("form-msg");
+  if (!img || !popup) return;
 
   let pressTimer;
-  img.addEventListener("touchstart", (e) => {
-    const touch = e.touches[0];
-    pressTimer = setTimeout(() => {
-      if (isInTargetArea(touch, img)) {
-        showPopup(popup);
-      }
-    }, 200);
-  });
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  img.addEventListener("touchend", () => clearTimeout(pressTimer));
-  img.addEventListener("touchcancel", () => clearTimeout(pressTimer));
-} else {
-  img.addEventListener("click", (e) => {
-    if (isInTargetArea(e, img)) {
-      showPopup(popup);
-    }
-  });
-}
-// PCのみ: シューズ画像をダブルクリックしたら「こすった」と判定
-if (!isMobile) {
-  shoes.addEventListener("click", () => {
-    swipeCount++;
-    flashScreenEffect(); // ✨演出
-    if (swipeCount >= 1) {
-     shoes.src = "https://github.com/kamaruri/public-assets/blob/main/shoes_%E3%81%B4%E3%81%8B%E3%81%B4%E3%81%8B.jpg?raw=true";
+  function showPopup() {
+    popup.style.display = "block";
+    setTimeout(() => {
+      popup.style.display = "none";
+    }, 3000);
+  }
 
-      meat.classList.remove("disabled");
-    }
-  });
-}
+  function isInTargetArea(event, element) {
+    const rect = element.getBoundingClientRect();
+    const x = (event.clientX || event.touches?.[0]?.clientX) - rect.left;
+    const y = (event.clientY || event.touches?.[0]?.clientY) - rect.top;
+    const inX = x > rect.width * 0.35 && x < rect.width * 0.65;
+    const inY = y > rect.height * 0.3 && y < rect.height * 0.7;
+    return inX && inY;
+  }
+
+  if (isMobile) {
+    img.addEventListener("contextmenu", e => e.preventDefault());
+
+    img.addEventListener("touchstart", (e) => {
+      pressTimer = setTimeout(() => {
+        if (isInTargetArea(e, img)) showPopup();
+      }, 800);
+    });
+
+    img.addEventListener("touchend", () => clearTimeout(pressTimer));
+    img.addEventListener("touchcancel", () => clearTimeout(pressTimer));
+  } else {
+    img.addEventListener("mousedown", (e) => {
+      pressTimer = setTimeout(() => {
+        if (isInTargetArea(e, img)) showPopup();
+      }, 800);
+    });
+    img.addEventListener("mouseup", () => clearTimeout(pressTimer));
+    img.addEventListener("mouseleave", () => clearTimeout(pressTimer));
+  }
+});
+
 
 
 
