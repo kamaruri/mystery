@@ -1,130 +1,280 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>その一歩を、信じてほしい | 火星野つばさ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=M+PLUS+Rounded+1c&family=Zen+Kaku+Gothic+Antique&display=swap" rel="stylesheet">
   <style>
-    /* ベーススタイル */
+    :root {
+      --primary: #1a4d2e;
+      --accent: #e60039;
+      --bg: #f4f4f4;
+      --light: #ffffff;
+    }
+
     body {
       margin: 0;
       font-family: 'Noto Sans JP', sans-serif;
-      background: linear-gradient(to bottom, #f0f8ff, #e6ffe6);
+      background-color: var(--bg);
       color: #333;
     }
+
     header {
-      background-color: #000;
-      color: #fff;
-      padding: 1rem;
+      background-color: var(--primary);
+      color: var(--light);
+      padding: 1.5rem;
       text-align: center;
       font-family: 'M PLUS Rounded 1c', sans-serif;
       font-size: 2rem;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #111;
-    }
-    nav a {
-      color: white;
-      padding: 1rem;
-      text-decoration: none;
       font-weight: bold;
     }
-    nav a:hover {
-      background-color: #333;
+
+    nav {
+      display: flex;
+      overflow-x: auto;
+      background-color: #000;
+      border-bottom: 2px solid var(--accent);
     }
-    main {
+
+    nav button {
+      flex: 1;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    nav button.active {
+      background-color: var(--accent);
+    }
+
+    .content-section {
+      display: none;
       padding: 2rem;
-      line-height: 1.8;
+      background-color: var(--light);
+      animation: fadein 0.4s;
     }
-    h1 {
-      font-size: 2rem;
-      color: #1a4d2e;
+
+    .content-section.active {
+      display: block;
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h2 {
       font-family: 'Zen Kaku Gothic Antique', sans-serif;
+      font-size: 1.5rem;
+      color: var(--primary);
     }
-    .interview {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-    }
-    .image-wrapper {
-      position: relative;
+
+    .interview-image {
       text-align: center;
-      margin-top: 2rem;
+      margin: 2rem 0;
+      position: relative;
     }
+
     #kaseno-img {
-      max-width: 90%;
-      border-radius: 12px;
-      -webkit-user-select: none;
+      width: 90%;
+      border-radius: 16px;
       user-select: none;
+      -webkit-user-select: none;
       -webkit-touch-callout: none;
     }
+
     #popup {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.8);
       color: white;
       padding: 1rem 2rem;
       border-radius: 10px;
       display: none;
-      font-size: 1rem;
-      z-index: 999;
-    }
-    footer {
-      margin-top: 3rem;
+      z-index: 1000;
       text-align: center;
-      font-size: 0.9rem;
-      color: #666;
     }
   </style>
 </head>
 <body>
   <header>その一歩を、信じてほしい</header>
-  <nav>
-    <a href="#club">クラブ</a>
-    <a href="#match">試合</a>
+  <nav id="tab-buttons">
+    <button class="active" data-tab="news">ニュース</button>
+    <button data-tab="schedule">試合日程・結果&練習</button>
+    <button data-tab="players">選手・スタッフ</button>
+    <button data-tab="ticket">チケット</button>
+    <button data-tab="stadium">スタジアム</button>
+    <button data-tab="fan">ファンゾーン</button>
+    <button data-tab="academy">アカデミー</button>
+    <button data-tab="school">スクール</button>
+    <button data-tab="town">ホームタウン活動</button>
   </nav>
 
-  <main>
-    <h1>――夢に向かう人たちへ、何を伝えたいですか？</h1>
-    <div class="interview">
-      「信じる力」は、時に現実を動かすほどの強さを持っています。<br>
-      どんなに遠く感じる夢も、その一歩を踏み出す勇気があれば、近づくことができる。<br>
-      自分の弱さも不安も、全部抱きしめて前に進んでほしい。<br>
-      誰かの期待じゃなく、自分の本気の気持ちのために。<br>
-      私も、まだ走ってる。だから、一緒に走ろう。
+  <div id="news" class="content-section active">
+    <h2>ニュース</h2>
+    <p>【2025.06.01】火星野つばさ、新たな挑戦を宣言。<br>クラブ「レオネッサ・ギャラクシア」は、キャプテン火星野つばさの引退発表とともに、次代への布石としてアカデミー強化方針を発表。<br>彼女の言葉「夢を見せる責任を、次の世代に手渡したい」に会場は静まり返った。</p>
+    <div class="interview-image">
+      <img id="kaseno-img" src="https://github.com/kamaruri/public-assets/blob/main/%E8%83%8C%E4%B8%AD%E3%82%92%E5%90%91%E3%81%91%E3%81%9F%E9%81%B8%E6%89%8B%E3%81%A7%E5%B7%A6%E5%8F%B3%E3%81%AB%E8%83%8C%E6%99%AF%E3%81%82%E3%82%8Apng.jpg?raw=true" alt="火星野つばさの後ろ姿">
+      <div id="popup">背中を押してくれてありがとう！<br>ファイトと送信しよう！</div>
     </div>
+  </div>
 
-    <div class="image-wrapper">
-      <img id="kaseno-img" src="https://github.com/kamaruri/public-assets/blob/main/%E9%AA%A8%E4%BB%98%E3%81%8D%E8%82%89.jpg?raw=true" alt="火星野つばさの後姿">
-      <div id="popup">背中を押してくれてありがとう！<br>「ファイト」と送信しよう！</div>
-    </div>
+  <!-- 今後、ここに各タブのHTMLコンテンツを続けて挿入します -->
 
-    <section id="club">
-      <h2>クラブについて</h2>
-      <p>火星野つばさは架空の選手です。ただし、参考として <a href="https://inac-kobe.com/player" target="_blank">INAC神戸レオネッサ公式サイト</a>（実在のクラブ）をご確認ください。</p>
-    </section>
+  <div id="schedule" class="content-section">
+    <h2>試合日程・結果＆練習</h2>
+    <p>
+      🔹<strong>次回試合：</strong>6月22日（土）18:00キックオフ<br>
+      レオネッサ・ギャラクシア vs 金星クルセイダーズ（＠火星陸ドーム）<br><br>
+      🔸<strong>直近の試合結果：</strong><br>
+      6月15日：○ 3-1 木星レイダース<br>
+      6月8日：△ 0-0 地球スターズ<br><br>
+      🔧<strong>練習内容：</strong><br>
+      6月10日〜14日：AIトラッキングによる個別戦術強化メニュー実施。ピッチ脇にはARコーチングゾーンを導入し、選手一人ひとりに即時フィードバックを提供。<br>
+      特に火星野つばさ選手はコンディション最高評価を記録。
+    </p>
+  </div>
 
-    <section id="match">
-      <h2>試合予定（架空）</h2>
-      <ul>
-        <li>6月25日（土） vs 宇宙ユナイテッド＠火星スタジアム</li>
-        <li>7月2日（土） vs 木星ジャイアンツ＠地球ドーム</li>
-      </ul>
-    </section>
+  <div id="players" class="content-section">
+    <h2>選手・スタッフ</h2>
+    <p>
+      <strong>#10 火星野つばさ（FW／キャプテン）</strong><br>
+      ピッチでは絶対的エース。試合中の無言の背中は「走れ」のメッセージ。2025シーズンは全試合出場中。趣味は「星空の観察」だが、戦術ノートには毎試合膨大なメモが残る。<br><br>
 
-    <footer>
-      ※このサイトは架空の人物・内容に基づくフィクションです。<br>
-      本サイトの内容は実在の人物・団体とは一切関係ありません。
-    </footer>
-  </main>
+      <strong>小惑星ジロー（監督）</strong><br>
+      火星代表として数々の国際大会を経験した元MF。戦術設計の鬼として知られ、グラウンド外でも選手との距離が近く、信頼は厚い。<br><br>
+
+      その他、チームには未来の主役たる若手MF「アステロイド・マコト」や、DF「ルナ・シールド」など、個性豊かな架空選手たちが在籍している。
+    </p>
+  </div>
+
+  <div id="ticket" class="content-section">
+    <h2>チケット</h2>
+    <p>
+      🎫<strong>チケット料金：</strong><br>
+      一般：3,000円 ／ U-18割引：1,000円 ／ 火星住民：無料（身分証提示）<br><br>
+
+      📍<strong>購入方法：</strong><br>
+      ・公式サイトのチケットページより購入可能<br>
+      ・主要な宇宙便航線窓口での直接購入も可<br><br>
+
+      💺<strong>座席カテゴリー：</strong><br>
+      ・ピッチサイド・オーロラビュー席（限定100）<br>
+      ・コメット席（中央エリア）<br>
+      ・バックスタンド・フリープラン席 など複数用意。<br>
+
+      🛑<strong>注意：</strong> 惑星間移動の際は別途交通手段をご用意ください。
+    </p>
+  </div>
+
+  <div id="stadium" class="content-section">
+    <h2>スタジアム</h2>
+    <p>
+      🏟<strong>火星陸ドーム</strong><br>
+      火星赤道直下に設置された全天候型スタジアム。最大収容人員は8万人。<br>
+      ピッチは天然芝型ソーラーフィールドを採用し、日照の変化にも柔軟に対応。観客席には空中浮遊型リクライニングチェア、トンネル内にはAIドリンクスタンドを配置。<br><br>
+      🌐<strong>アクセス：</strong><br>
+      ・オリュンポスモンサブシャトル駅より徒歩15分<br>
+      ・軌道エレベータ経由での地球連結ルートあり
+    </p>
+  </div>
+
+  <div id="fan" class="content-section">
+    <h2>ファンゾーン</h2>
+    <p>
+      🎉<strong>ファン交流イベント：</strong><br>
+      火星陸ドーム前広場にて、毎試合前に「ファンギャザリング」開催！火星野選手の等身大ホログラムと写真が撮れるフォトブース、選手のメッセージ動画が流れるパビリオンも大好評。<br><br>
+
+      🛍<strong>グッズ販売：</strong><br>
+      火星野Tシャツ、レプリカユニフォーム、宇宙限定トレカセットなど多数ラインアップ。<br><br>
+
+      📱<strong>SNS連携企画：</strong><br>
+      ハッシュタグ「#火星野へ届け」で応援メッセージを投稿すると、試合中にスタジアムビジョンに掲載されるチャンスも！
+    </p>
+    <p>
+      🌌<strong>プレミアム会員制度：</strong><br>
+      月額500火星ドルで、試合後の選手インタビュー視聴、限定グッズの先行購入、火星野選手による直筆メッセージ入りカードなどが受け取れるプレミアム体験が可能です。
+    </p>
+  </div>
+
+  <div id="academy" class="content-section">
+    <h2>アカデミー</h2>
+    <p>
+      🔭<strong>ギャラクシア育成アカデミー</strong><br>
+      地球から火星へ、宇宙時代の人材を育てる。10歳〜18歳の選手を対象に、AIと連携した個別育成プログラムを採用。技術・戦術に加え、スポーツマンシップや宇宙倫理教育にも力を入れています。<br><br>
+
+      🔄<strong>進路支援：</strong><br>
+      卒業後はトップチーム昇格、宇宙リーグトライアル、学術機関推薦など多彩な進路実績。
+    </p>
+    <p>
+      🧭<strong>国際連携：</strong><br>
+      地球連邦アカデミーや金星ユースリーグとの交換プログラムにより、選手たちは多様な環境に触れながら視野を広げることができます。
+    </p>
+  </div>
+
+  <div id="school" class="content-section">
+    <h2>スクール</h2>
+    <p>
+      🎓<strong>サテライト・ジュニアスクール</strong><br>
+      火星と地球をつなぐ双方向型スクール。年中〜中学生を対象に、サッカーの楽しさを通じて協調性・思考力を育てることを目的としています。<br><br>
+
+      🌞<strong>毎週の活動：</strong><br>
+      土曜午前：火星校グラウンドにて実技指導／地球校はVRトレーニング<br>
+      水曜夜：ビデオ講義＋Q&Aタイム（Zoom+AI分析）<br><br>
+
+      📧<strong>体験受付中！</strong> 初回は無料、メールフォームより申し込み可能です。
+    </p>
+    <p>
+      🛡<strong>保護者向けセミナー：</strong><br>
+      毎月第3日曜には、地球・火星それぞれで保護者対象のスポーツ教育セミナーを開催。火星野選手自身が語る「挫折と再起」の講話が人気です。
+    </p>
+  </div>
+
+  <div id="town" class="content-section">
+    <h2>ホームタウン活動</h2>
+    <p>
+      🤝<strong>地域とともに、宇宙とともに</strong><br>
+      火星野選手が中心となって取り組む「M-ecoプロジェクト」は、火星赤道エリアの環境保全と再生可能エネルギー啓発を軸とする地域密着型活動。<br><br>
+
+      ✨<strong>具体的な取り組み：</strong><br>
+      ・子どもたちへのスポーツ授業支援（仮設教室×VR）<br>
+      ・火星ゴミゼロキャンペーンの先導<br>
+      ・月1回の清掃活動＋リサイクルアート展開催<br><br>
+
+      🔊「応援される存在」から「共に歩む存在」へ――これが火星野の信念です。
+    </p>
+    <p>
+      📚<strong>学校連携プログラム：</strong><br>
+      地元の教育機関と連携し、「宇宙で生きる力」をテーマにした特別授業を定期開催。キャリア教育としてのプロ選手の話に、毎回生徒たちは目を輝かせています。
+    </p>
+  </div>
 
   <script>
+    // タブ切替
+    const buttons = document.querySelectorAll('#tab-buttons button');
+    const sections = document.querySelectorAll('.content-section');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => btn.classList.remove('active'));
+        sections.forEach(sec => sec.classList.remove('active'));
+        
+        button.classList.add('active');
+        document.getElementById(button.dataset.tab).classList.add('active');
+      });
+    });
+
+    // 長押し検出
     const img = document.getElementById("kaseno-img");
     const popup = document.getElementById("popup");
-
     let pressTimer;
 
     img.addEventListener("touchstart", (e) => {
