@@ -6,6 +6,8 @@
   <title>その一歩を、信じてほしい | 火星野つばさ</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=M+PLUS+Rounded+1c&family=Zen+Kaku+Gothic+Antique&display=swap" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@500&family=Share+Tech+Mono&family=Shippori+Mincho+B1&family=M+PLUS+Rounded+1c&family=Kosugi+Maru&family=Zen+Old+Mincho&family=Noto+Serif+JP&family=IBM+Plex+Sans+JP&display=swap');
+
     :root {
       --primary: #1a4d2e;
       --accent: #e60039;
@@ -15,9 +17,64 @@
 
     body {
       margin: 0;
-      font-family: 'Noto Sans JP', sans-serif;
-      background-color: var(--bg);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.theme-news {
+      background: #ffffff;
+      color: #000;
+      font-family: 'Bebas Neue', sans-serif;
+      text-transform: uppercase;
+    }
+
+    body.theme-schedule {
+      background: #001F3F;
+      color: #ffffff;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    body.theme-players {
+      background: #faf3e0;
       color: #333;
+      font-family: 'Noto Serif JP', serif;
+    }
+
+    body.theme-ticket {
+      background: linear-gradient(to right, #111, #333);
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body.theme-stadium {
+      background: url('https://source.unsplash.com/1600x900/?stadium') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      font-family: 'Shippori Mincho B1', serif;
+    }
+
+    body.theme-fan {
+      background: #fff0f5;
+      color: #333;
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+    }
+
+    body.theme-academy {
+      background: #f5f9fd;
+      color: #222;
+      font-family: 'IBM Plex Sans JP', sans-serif;
+    }
+
+    body.theme-school {
+      background: #ffffe0;
+      color: #222;
+      font-family: 'Kosugi Maru', sans-serif;
+    }
+
+    body.theme-town {
+      background: linear-gradient(to bottom, #ffffff 70%, #e0e0ff);
+      color: #222;
+      font-family: 'Zen Old Mincho', serif;
+      text-align: center;
     }
 
     header {
@@ -56,7 +113,6 @@
     .content-section {
       display: none;
       padding: 2rem;
-      background-color: var(--light);
       animation: fadein 0.4s;
     }
 
@@ -67,12 +123,6 @@
     @keyframes fadein {
       from { opacity: 0; }
       to { opacity: 1; }
-    }
-
-    h2 {
-      font-family: 'Zen Kaku Gothic Antique', sans-serif;
-      font-size: 1.5rem;
-      color: var(--primary);
     }
 
     .interview-image {
@@ -119,11 +169,17 @@
   </nav>
 
   <div id="news" class="content-section active">
-    <h2>ニュース</h2>
-    <p>【2025.06.01】火星野つばさ、新たな挑戦を宣言。<br>クラブ「レオネッサ・ギャラクシア」は、キャプテン火星野つばさの引退発表とともに、次代への布石としてアカデミー強化方針を発表。<br>彼女の言葉「夢を見せる責任を、次の世代に手渡したい」に会場は静まり返った。</p>
+    <h2 style="font-size: 2.5rem; border-left: 6px solid crimson; padding-left: 0.5rem; letter-spacing: 2px;">🚨 NEWS</h2>
+    <article style="max-width: 700px; margin: 2rem auto; font-size: 1.1rem; line-height: 2;">
+      <p style="border-left: 4px solid #ccc; padding-left: 1rem;">【2025.06.01】火星野つばさ、新たな挑戦を宣言。クラブ「レオネッサ・ギャラクシア」は、キャプテン火星野つばさの引退発表とともに、次代への布石としてアカデミー強化方針を発表。</p>
+      <p style="font-style: italic; text-align: center; margin-top: 1rem;">「夢を見せる責任を、次の世代に手渡したい」</p>
+      <p>この言葉に、会場は静まり返り、多くのファンが涙した。</p>
+    </article>
     <div class="interview-image">
       <img id="kaseno-img" src="https://github.com/kamaruri/public-assets/blob/main/%E8%83%8C%E4%B8%AD%E3%82%92%E5%90%91%E3%81%91%E3%81%9F%E9%81%B8%E6%89%8B%E3%81%A7%E5%B7%A6%E5%8F%B3%E3%81%AB%E8%83%8C%E6%99%AF%E3%81%82%E3%82%8Apng.jpg?raw=true" alt="火星野つばさの後ろ姿">
       <div id="popup">背中を押してくれてありがとう！<br>ファイトと送信しよう！</div>
+    </div>
+  </div>
     </div>
   </div>
 
@@ -145,46 +201,60 @@
 
   <div id="players" class="content-section">
     <h2>選手・スタッフ</h2>
-    <p>
-      <strong>#10 火星野つばさ（FW／キャプテン）</strong><br>
-      ピッチでは絶対的エース。試合中の無言の背中は「走れ」のメッセージ。2025シーズンは全試合出場中。趣味は「星空の観察」だが、戦術ノートには毎試合膨大なメモが残る。<br><br>
-
-      <strong>小惑星ジロー（監督）</strong><br>
-      火星代表として数々の国際大会を経験した元MF。戦術設計の鬼として知られ、グラウンド外でも選手との距離が近く、信頼は厚い。<br><br>
-
-      その他、チームには未来の主役たる若手MF「アステロイド・マコト」や、DF「ルナ・シールド」など、個性豊かな架空選手たちが在籍している。
-    </p>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+      <div style="flex: 1; min-width: 250px; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 1rem;">
+        <h3>#10 火星野つばさ（FW／キャプテン）</h3>
+        <p>
+          ピッチでは絶対的エース。試合中の無言の背中は「走れ」のメッセージ。2025シーズンは全試合出場中。趣味は「星空の観察」だが、戦術ノートには毎試合膨大なメモが残る。
+        </p>
+      </div>
+      <div style="flex: 1; min-width: 250px; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 1rem;">
+        <h3>小惑星ジロー（監督）</h3>
+        <p>
+          火星代表として数々の国際大会を経験した元MF。戦術設計の鬼として知られ、グラウンド外でも選手との距離が近く、信頼は厚い。
+        </p>
+      </div>
+      <div style="flex: 1 100%; margin-top: 1rem;">
+        <p>
+          その他、チームには未来の主役たる若手MF「アステロイド・マコト」や、DF「ルナ・シールド」など、個性豊かな架空選手たちが在籍している。
+        </p>
+      </div>
+    </div>
   </div>
 
   <div id="ticket" class="content-section">
-    <h2>チケット</h2>
-    <p>
-      🎫<strong>チケット料金：</strong><br>
-      一般：3,000円 ／ U-18割引：1,000円 ／ 火星住民：無料（身分証提示）<br><br>
-
-      📍<strong>購入方法：</strong><br>
-      ・公式サイトのチケットページより購入可能<br>
-      ・主要な宇宙便航線窓口での直接購入も可<br><br>
-
-      💺<strong>座席カテゴリー：</strong><br>
-      ・ピッチサイド・オーロラビュー席（限定100）<br>
-      ・コメット席（中央エリア）<br>
-      ・バックスタンド・フリープラン席 など複数用意。<br>
-
-      🛑<strong>注意：</strong> 惑星間移動の際は別途交通手段をご用意ください。
-    </p>
+    <h2 style="font-size: 2.5rem; border-bottom: 2px dashed #ffcc00; padding-bottom: 0.5rem;">🎟 チケット情報</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+      <div style="flex: 1; min-width: 200px; background: #222; padding: 1.5rem; border-radius: 12px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);">
+        <h3 style="font-size: 1.2rem; color: #ffcc00;">一般チケット</h3>
+        <p>💰 3,000円</p>
+      </div>
+      <div style="flex: 1; min-width: 200px; background: #222; padding: 1.5rem; border-radius: 12px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);">
+        <h3 style="font-size: 1.2rem; color: #00ccff;">U-18割引</h3>
+        <p>👶 1,000円</p>
+      </div>
+      <div style="flex: 1; min-width: 200px; background: #222; padding: 1.5rem; border-radius: 12px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);">
+        <h3 style="font-size: 1.2rem; color: #00ff99;">火星住民</h3>
+        <p>🪐 無料（要身分証）</p>
+      </div>
+    </div>
+    <div style="margin-top: 2rem; font-size: 1rem;">
+      <p>📍 <strong>購入方法：</strong>公式サイトのチケットページ または 宇宙便航線窓口にてお求めいただけます。</p>
+      <p>💺 <strong>座席種類：</strong>ピッチサイド・オーロラビュー、コメット席、バックスタンド・フリープラン席など多彩にご用意。</p>
+      <p>🛑 <strong>注意：</strong> 惑星間移動の際は別途交通手段をご用意ください。</p>
+    </div>
   </div>
 
   <div id="stadium" class="content-section">
-    <h2>スタジアム</h2>
-    <p>
+    <h2 style="writing-mode: vertical-rl; text-orientation: upright; font-size: 2rem; text-align: right; line-height: 2;">スタジアム紹介</h2>
+    <div style="writing-mode: vertical-rl; text-orientation: mixed; line-height: 2; font-size: 1.2rem;">
       🏟<strong>火星陸ドーム</strong><br>
       火星赤道直下に設置された全天候型スタジアム。最大収容人員は8万人。<br>
       ピッチは天然芝型ソーラーフィールドを採用し、日照の変化にも柔軟に対応。観客席には空中浮遊型リクライニングチェア、トンネル内にはAIドリンクスタンドを配置。<br><br>
       🌐<strong>アクセス：</strong><br>
       ・オリュンポスモンサブシャトル駅より徒歩15分<br>
       ・軌道エレベータ経由での地球連結ルートあり
-    </p>
+    </div>
   </div>
 
   <div id="fan" class="content-section">
@@ -239,40 +309,49 @@
   </div>
 
   <div id="town" class="content-section">
-    <h2>ホームタウン活動</h2>
-    <p>
-      🤝<strong>地域とともに、宇宙とともに</strong><br>
-      火星野選手が中心となって取り組む「M-ecoプロジェクト」は、火星赤道エリアの環境保全と再生可能エネルギー啓発を軸とする地域密着型活動。<br><br>
-
-      ✨<strong>具体的な取り組み：</strong><br>
+    <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">🌈 ホームタウン活動</h2>
+    <blockquote style="font-style: italic; font-size: 1.3rem; color: #444; margin: 2rem auto; max-width: 700px;">
+      応援される存在から、<br>
+      共に歩む存在へ。
+    </blockquote>
+    <div style="max-width: 700px; margin: auto; line-height: 2;">
+      <p>火星野選手が中心となって取り組む「M-ecoプロジェクト」は、火星赤道エリアの環境保全と再生可能エネルギー啓発を軸とする地域密着型活動。</p>
+      <p><strong>主な取り組み：</strong><br>
       ・子どもたちへのスポーツ授業支援（仮設教室×VR）<br>
       ・火星ゴミゼロキャンペーンの先導<br>
-      ・月1回の清掃活動＋リサイクルアート展開催<br><br>
-
-      🔊「応援される存在」から「共に歩む存在」へ――これが火星野の信念です。
-    </p>
-    <p>
-      📚<strong>学校連携プログラム：</strong><br>
-      地元の教育機関と連携し、「宇宙で生きる力」をテーマにした特別授業を定期開催。キャリア教育としてのプロ選手の話に、毎回生徒たちは目を輝かせています。
-    </p>
+      ・月1回の清掃活動＋リサイクルアート展開催</p>
+      <p>📚 学校連携プログラム：地元の教育機関と連携し、「宇宙で生きる力」をテーマにした特別授業を定期開催。</p>
+    </div>
   </div>
 
   <script>
-    // タブ切替
     const buttons = document.querySelectorAll('#tab-buttons button');
     const sections = document.querySelectorAll('.content-section');
+    const tabThemes = {
+      news: 'theme-news',
+      schedule: 'theme-schedule',
+      players: 'theme-players',
+      ticket: 'theme-ticket',
+      stadium: 'theme-stadium',
+      fan: 'theme-fan',
+      academy: 'theme-academy',
+      school: 'theme-school',
+      town: 'theme-town'
+    };
 
     buttons.forEach(button => {
       button.addEventListener('click', () => {
         buttons.forEach(btn => btn.classList.remove('active'));
         sections.forEach(sec => sec.classList.remove('active'));
-        
+
+        const tab = button.dataset.tab;
+        document.body.className = tabThemes[tab] || '';
+
         button.classList.add('active');
-        document.getElementById(button.dataset.tab).classList.add('active');
+        document.getElementById(tab).classList.add('active');
       });
     });
 
-    // 長押し検出
     const img = document.getElementById("kaseno-img");
     const popup = document.getElementById("popup");
     let pressTimer;
