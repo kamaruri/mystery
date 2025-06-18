@@ -534,17 +534,143 @@
   start: {
     text: "こんにちは！どんなお問い合わせですか？以下から選んでください：",
     options: [
-      { label: "申込について", next: "application" },
       { label: "選手について", next: "players" },
-      { label: "アクセス・場所について", next: "access" }
+      { label: "アクセス・場所について", next: "access" },
+      { label: "イベント・楽しみ", next: "events" },
+      { label: "クラブについて", next: "club" },
+      { label: "申込について", next: "application" }
     ]
   },
+
+  // --- Players
+  players: {
+    text: "選手についてご興味ありがとうございます。どういった情報をお求めですか？",
+    options: [
+      { label: "ポジション別で見る", next: "positions" },
+      { label: "人気ランキング", next: "ranking" },
+      { label: "引退選手紹介", next: "retired" }
+    ]
+  },
+  positions: {
+    text: "各ポジションの注目選手を紹介します：\n\n・FW：火星野つばさ\n・MF：風間リク\n・DF：ミラ・タートル\n・GK：ユイ・スコーピオン",
+    options: [
+      { label: "選手インタビューを見る", next: "interview" }
+    ]
+  },
+  interview: {
+    text: "選手インタビュー：『勝利のためにすべてを懸ける。』彼らの情熱が伝わってきますね。",
+    options: []
+  },
+  ranking: {
+    text: "今週の人気選手ランキング：\n1位 火星野つばさ\n2位 ユイ・スコーピオン\n3位 風間リク",
+    options: [
+      { label: "応援メッセージを送る", next: "cheerMessage" }
+    ]
+  },
+  cheerMessage: {
+    text: "応援メッセージありがとうございます！選手に届くよう、心を込めて伝えます。",
+    options: []
+  },
+  retired: {
+    text: "引退選手紹介：\n・リオ・アルゴ：チーム初代キャプテン。\n・ナナ・ルシーダ：伝説のウインガー。\n彼らの功績を胸に、今の選手たちが戦っています。",
+    options: []
+  },
+
+  // --- Access
+  access: {
+    text: "アクセスについてですね。どういった内容が気になりますか？",
+    options: [
+      { label: "アクセス手段", next: "transport" },
+      { label: "現地設備", next: "facility" },
+      { label: "アウェイ遠征案内", next: "away" }
+    ]
+  },
+  transport: {
+    text: "火星中央ステーションから地下チューブで15分。重力ブーツの着用を推奨しています。",
+    options: []
+  },
+  facility: {
+    text: "現地の設備一覧：売店、トイレ、託児所、医務室。どなたでも快適に観戦できます。",
+    options: []
+  },
+  away: {
+    text: "アウェイ戦遠征ガイド：火星外周地域への試合もツアー実施中！宿泊＆交通付きで安心。",
+    options: []
+  },
+
+  // --- Events
+  events: {
+    text: "イベント・楽しみ方について、以下からお選びください：",
+    options: [
+      { label: "今月のイベント情報", next: "monthlyEvents" },
+      { label: "応援キャンペーン", next: "campaign" },
+      { label: "ゲーム・占い・診断", next: "funTools" }
+    ]
+  },
+  monthlyEvents: {
+    text: "今月のイベント予定：\n・選手握手会：6/25\n・スクール体験：6/30\n・火星花火フェス：7/1\nいずれも先着順です。",
+    options: []
+  },
+  campaign: {
+    text: "応援キャンペーン：\n『#火星野レオネッサ』をSNSで投稿すると抽選でグッズが当たります！",
+    options: []
+  },
+  funTools: {
+    text: "\n🎮 あなたの推し選手は？\n\n3問の質問に答えると、今のあなたにぴったりな選手が現れます！近日公開予定！",
+    options: []
+  },
+
+  // --- Club
+  club: {
+    text: "クラブについて、気になる項目は？",
+    options: [
+      { label: "クラブの歴史", next: "history" },
+      { label: "スタッフ紹介", next: "staff" },
+      { label: "採用・ボランティア", next: "recruit" }
+    ]
+  },
+  history: {
+    text: "火星野レオネッサの歩み：2041年創設、2045年にリーグ昇格、2049年には火星カップ初優勝！",
+    options: []
+  },
+  staff: {
+    text: "監督：天城セイラ\nトレーナー：マックス井原\n運営統括：カワセ・ジョー",
+    options: []
+  },
+  recruit: {
+    text: "採用・ボランティア情報：情熱を持つあなたをお待ちしています。年齢・経験は不問です。",
+    options: []
+  },
+
+  // --- Application
   application: {
-    text: "申込ですね！どの内容についてですか？",
+    text: "申込についてですね。ご希望の内容をお選びください：",
     options: [
       { label: "チケット申込", next: "ticket" },
-      { label: "スクール申込", next: "school" },
-      { label: "グッズ購入", next: "goods" }
+      { label: "スクール／アカデミー申込", next: "schoolGender" },
+      { label: "グッズ購入", next: "goods" },
+      { label: "ファンクラブ入会", next: "fanclub" }
+    ]
+  },
+  ticket: {
+    text: "チケット申込ですね。\n\n自由席・指定席・団体席がございます。早めのご予約がおすすめです。\nお支払い方法はクレカ・コンビニ・LINE Payなど選べます。",
+    options: []
+  },
+  goods: {
+    text: "グッズ購入についてですね。\n\n選手の背番号入りユニフォーム、応援タオル、火星名物・赤土クッキーなど、多数ご用意しています。\nサイズや数量もお選びいただけます。",
+    options: []
+  },
+  fanclub: {
+    text: "ファンクラブ入会について：ライト／スタンダード／VIPの3種。会員特典には限定グッズやイベント参加券があります。",
+    options: []
+  },
+  
+  // --- School flow
+  schoolGender: {
+    text: "アカデミーに参加される方の性別を選択してください。",
+    options: [
+      { label: "女子", next: "school" },
+      { label: "男子", next: "school" }
     ]
   },
   school: {
@@ -554,26 +680,11 @@
     ]
   },
   lineGuide: {
-    text: "LINEで『再出発』と入力してください！私たちが次のステップをご案内します。",
-    options: []
-  },
-  ticket: {
-    text: "チケット申込についてですね。\n\n現在、火星野レオネッサの次回ホームゲームは大変混雑が予想されます。\n早めのご予約をおすすめします。\n\n詳細・購入方法は公式LINEにて『チケット』とご入力ください。",
-    options: []
-  },
-  goods: {
-    text: "グッズ購入についてですね。\n\n選手の背番号入りユニフォーム、応援タオル、火星名物・赤土クッキーなど\n多数ご用意しています。\n\nLINEで『グッズ希望』と送っていただければ、購入ページをご案内します。",
-    options: []
-  },
-  players: {
-    text: "選手についてご興味ありがとうございます。\n\n・火星野つばさ：チームの司令塔で、今期アシスト王候補。\n・風間リク：異星間スピードスター。\n・ユイ・スコーピオン：GKながらPK得点率100%。\n\n詳しくは選手紹介ページをご覧ください。",
-    options: []
-  },
-  access: {
-    text: "アクセスについてですね。\n\n火星陸ドームへは火星中央ステーションから地下チューブで15分。\n現地では重力ブーツの着用をおすすめしています。\n\nアクセスMAPは公式サイトをご覧ください。",
+    text: "ありがとうございます！あなたの挑戦が始まります。担当者からのご連絡をお待ちください！",
     options: []
   }
 };
+
 
 function startChat() {
   document.getElementById('chatPopup').style.display = 'block';
