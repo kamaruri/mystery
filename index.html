@@ -152,6 +152,88 @@
       z-index: 1000;
       text-align: center;
     }
+
+    #chatPopup {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  background: #ffffff;
+  border: 2px solid #444;
+  border-radius: 16px;
+  padding: 1.5rem;
+  z-index: 1000;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  font-family: "Noto Sans JP", sans-serif;
+  animation: fadein 0.3s ease-in-out;
+}
+
+/* ボタン類の共通設定 */
+#chatPopup button {
+  display: inline-block;
+  background: #f2f2f2;
+  color: #333;
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  margin: 0.3em 0.5em;
+  border: 1px solid #999;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+#chatPopup button:hover {
+  background: #dcefff;
+  border-color: #66aaff;
+}
+
+/* 特別な「進む」ボタン用 */
+#chatPopup button[style*="gold"] {
+  color: #fff;
+  font-weight: bold;
+  background: linear-gradient(to right, #ffcc00, #ff8800);
+  box-shadow: 0 0 10px rgba(255, 200, 50, 0.6);
+  border: none;
+}
+
+/* テキスト部分 */
+#chatBox p {
+  line-height: 1.8;
+  font-size: 1rem;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+/* 閉じるボタン */
+#chatPopup > div:first-child button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #999;
+}
+#chatPopup > div:first-child button:hover {
+  color: #333;
+}
+
+/* フェードイン効果 */
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<div id="inquiry" class="content-section">
+  <h2>お問い合わせチャット</h2>
+  <button onclick="startChat()">🗨️ チャットで問い合わせる</button>
+
+  <div id="chatPopup">
+    <div style="text-align: right;"><button onclick="closeChat()">❌ 閉じる</button></div>
+    <div id="chatBox"></div>
+  </div>
+</div>
   </style>
 </head>
 <body>
@@ -166,6 +248,7 @@
     <button data-tab="academy">アカデミー</button>
     <button data-tab="school">スクール</button>
     <button data-tab="town">ホームタウン活動</button>
+    <button data-tab="inquiry">お問い合わせ</button>
   </nav>
 
   <div id="news" class="content-section active">
@@ -245,7 +328,7 @@
     </div>
   </div>
 
-  <div id="stadium" class="content-section">
+  <div id="stadium" class="">
     <h2 style="writing-mode: vertical-rl; text-orientation: upright; font-size: 2rem; text-align: right; line-height: 2;">スタジアム紹介</h2>
     <div style="writing-mode: vertical-rl; text-orientation: mixed; line-height: 2; font-size: 1.2rem;">
       🏟<strong>火星陸ドーム</strong><br>
@@ -324,6 +407,17 @@
     </div>
   </div>
 
+
+<div id="inquiry" class="content-section">
+  <h2>お問い合わせチャット</h2>
+  <button onclick="startChat()">🗨️ チャットで問い合わせる</button>
+
+  <div id="chatPopup">
+    <div style="text-align: right;"><button onclick="closeChat()">❌ 閉じる</button></div>
+    <div id="chatBox"></div>
+  </div>
+</div>
+  
   <script>
     const buttons = document.querySelectorAll('#tab-buttons button');
     const sections = document.querySelectorAll('.content-section');
@@ -337,6 +431,7 @@
       academy: 'theme-academy',
       school: 'theme-school',
       town: 'theme-town'
+      inquiry: 'theme-inquiry'
     };
 
     buttons.forEach(button => {
@@ -374,6 +469,70 @@
     img.addEventListener("touchend", () => {
       clearTimeout(pressTimer);
     });
+
+   const chatData = {
+  start: {
+    text: "こんにちは！どんなお問い合わせですか？以下から選んでください：",
+    options: [
+      { label: "申込について", next: "application" },
+      { label: "選手について", next: "players" },
+      { label: "アクセス・場所について", next: "access" }
+    ]
+  },
+  application: {
+    text: "申込ですね！どの内容についてですか？",
+    options: [
+      { label: "チケット申込", next: "ticket" },
+      { label: "スクール申込", next: "school" },
+      { label: "グッズ購入", next: "goods" }
+    ]
+  },
+  school: {
+    text: "このスクールは、君をプロへと導くスタートラインだ……！\n\n夢を本気で掴みに来い。きらめく未来のピッチが、今ここから始まる。",
+    options: [
+      { label: "🌟 進む（スクール申込へ）", next: "lineGuide", style: "font-weight:bold; background: linear-gradient(to right, gold, orange); border-radius: 10px; padding: 0.5em 1em;" }
+    ]
+  },
+  lineGuide: {
+    text: "LINEで『再出発』と入力してください！私たちが次のステップをご案内します。",
+    options: []
+  },
+  ticket: {
+    text: "チケット申込についてですね。\n\n現在、火星野レオネッサの次回ホームゲームは大変混雑が予想されます。\n早めのご予約をおすすめします。\n\n詳細・購入方法は公式LINEにて『チケット』とご入力ください。",
+    options: []
+  },
+  goods: {
+    text: "グッズ購入についてですね。\n\n選手の背番号入りユニフォーム、応援タオル、火星名物・赤土クッキーなど\n多数ご用意しています。\n\nLINEで『グッズ希望』と送っていただければ、購入ページをご案内します。",
+    options: []
+  },
+  players: {
+    text: "選手についてご興味ありがとうございます。\n\n・火星野つばさ：チームの司令塔で、今期アシスト王候補。\n・風間リク：異星間スピードスター。\n・ユイ・スコーピオン：GKながらPK得点率100%。\n\n詳しくは選手紹介ページをご覧ください。",
+    options: []
+  },
+  access: {
+    text: "アクセスについてですね。\n\n火星陸ドームへは火星中央ステーションから地下チューブで15分。\n現地では重力ブーツの着用をおすすめしています。\n\nアクセスMAPは公式サイトをご覧ください。",
+    options: []
+  }
+};
+
+function startChat() {
+  document.getElementById('chatPopup').style.display = 'block';
+  renderChat('start');
+}
+
+function closeChat() {
+  document.getElementById('chatPopup').style.display = 'none';
+}
+
+function renderChat(stateKey) {
+  const state = chatData[stateKey];
+  const chatBox = document.getElementById('chatBox');
+  let html = `<p>${state.text.replace(/\n/g, '<br>')}</p>`;
+  for (const opt of state.options) {
+    html += `<button style="margin: 0.5em; ${opt.style || ''}" onclick="renderChat('${opt.next}')">${opt.label}</button>`;
+  }
+  chatBox.innerHTML = html;
+}
   </script>
 </body>
 </html>
