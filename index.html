@@ -552,10 +552,31 @@
     ]
   },
   positions: {
-    text: "各ポジションの注目選手を紹介します：\n\n・FW：火星野つばさ\n・MF：風間リク\n・DF：ミラ・タートル\n・GK：ユイ・スコーピオン",
+    text: "ポジションを選んでください：",
     options: [
-      { label: "選手インタビューを見る", next: "interview" }
+      { label: "FW", next: "fwPlayers" },
+      { label: "MF", next: "mfPlayers" },
+      { label: "DF", next: "dfPlayers" },
+      { label: "GK", next: "gkPlayers" }
     ]
+  },
+  fwPlayers: {
+    text: "FWの注目選手：火星野つばさ。スピードと決定力に優れ、火星リーグ得点王の実績あり。",
+    options: [
+      { label: "インタビューを見る", next: "interview" }
+    ]
+  },
+  mfPlayers: {
+    text: "MFの注目選手：風間リク。宇宙一の展開力とボールキープ能力でゲームを支配。",
+    options: []
+  },
+  dfPlayers: {
+    text: "DFの注目選手：ミラ・タートル。鉄壁の守備とクールな判断でチームを支える。",
+    options: []
+  },
+  gkPlayers: {
+    text: "GKの注目選手：ユイ・スコーピオン。PKセーブ率100％の絶対的守護神。",
+    options: []
   },
   interview: {
     text: "選手インタビュー：『勝利のためにすべてを懸ける。』彼らの情熱が伝わってきますね。",
@@ -568,7 +589,7 @@
     ]
   },
   cheerMessage: {
-    text: "応援メッセージありがとうございます！選手に届くよう、心を込めて伝えます。",
+    text: "応援メッセージありがとうございます！選手に届くよう、心を込めて伝えます。これからも熱い応援をよろしくお願いします。",
     options: []
   },
   retired: {
@@ -586,15 +607,48 @@
     ]
   },
   transport: {
-    text: "火星中央ステーションから地下チューブで15分。重力ブーツの着用を推奨しています。",
+    text: "移動手段を選んでください：",
+    options: [
+      { label: "地下チューブ", next: "tubeAccess" },
+      { label: "シャトルバス", next: "busAccess" }
+    ]
+  },
+  tubeAccess: {
+    text: "火星中央ステーションから地下チューブで15分。スムーズかつ快適な移動を提供します。",
+    options: []
+  },
+  busAccess: {
+    text: "市内からのシャトルバスも運行中。試合当日は臨時便も増発されます。",
     options: []
   },
   facility: {
-    text: "現地の設備一覧：売店、トイレ、託児所、医務室。どなたでも快適に観戦できます。",
+    text: "施設のカテゴリを選んでください：",
+    options: [
+      { label: "売店／グッズ", next: "facilityShop" },
+      { label: "トイレ／医務室", next: "facilityCare" }
+    ]
+  },
+  facilityShop: {
+    text: "グッズ売店では最新ユニフォームや限定グッズを販売中。試合前後の楽しみにどうぞ！",
+    options: []
+  },
+  facilityCare: {
+    text: "清潔なトイレ・応急医療室が完備されており、どなたでも安心してご利用いただけます。",
     options: []
   },
   away: {
-    text: "アウェイ戦遠征ガイド：火星外周地域への試合もツアー実施中！宿泊＆交通付きで安心。",
+    text: "遠征先を選んでください：",
+    options: [
+      { label: "火星南リーグエリア", next: "awaySouth" },
+      { label: "外惑星リーグエリア", next: "awayOuter" }
+    ]
+  },
+  awaySouth: {
+    text: "南エリアでは火山地帯にあるアリーナが主戦場。迫力の試合と美しい景観を楽しめます。",
+    options: []
+  },
+  awayOuter: {
+    text: "外惑星リーグでは、土星の衛星チタンとの試合なども。超高重力環境下の激闘は必見です。",
     options: []
   },
 
@@ -608,15 +662,48 @@
     ]
   },
   monthlyEvents: {
-    text: "今月のイベント予定：\n・選手握手会：6/25\n・スクール体験：6/30\n・火星花火フェス：7/1\nいずれも先着順です。",
+    text: "どのイベントに興味がありますか？",
+    options: [
+      { label: "選手握手会", next: "eventMeet" },
+      { label: "花火フェス", next: "eventFireworks" }
+    ]
+  },
+  eventMeet: {
+    text: "握手会では選手とのふれあいだけでなく、写真撮影やサイン会も開催予定です。",
+    options: []
+  },
+  eventFireworks: {
+    text: "火星空に咲く花火フェス！音楽と光のショーで夏の夜を彩ります。",
     options: []
   },
   campaign: {
-    text: "応援キャンペーン：\n『#火星野レオネッサ』をSNSで投稿すると抽選でグッズが当たります！",
+    text: "キャンペーン内容を選んでください：",
+    options: [
+      { label: "SNS投稿キャンペーン", next: "campaignSNS" },
+      { label: "スタンプラリー", next: "campaignStamp" }
+    ]
+  },
+  campaignSNS: {
+    text: "『#火星野レオネッサ』をつけてSNSに投稿すると、抽選で限定グッズが当たります！",
+    options: []
+  },
+  campaignStamp: {
+    text: "スタジアム内5か所でスタンプを集めると、オリジナル缶バッジをプレゼント！",
     options: []
   },
   funTools: {
-    text: "\n🎮 あなたの推し選手は？\n\n3問の質問に答えると、今のあなたにぴったりな選手が現れます！近日公開予定！",
+    text: "どの診断にチャレンジしますか？",
+    options: [
+      { label: "推し選手診断", next: "diagnosisPlayer" },
+      { label: "火星適性テスト", next: "diagnosisMars" }
+    ]
+  },
+  diagnosisPlayer: {
+    text: "3問の質問に答えると、今のあなたにぴったりな選手が分かります！結果にご期待を。",
+    options: []
+  },
+  diagnosisMars: {
+    text: "火星生活への適性を診断します！あなたの未来が宇宙にあるかもしれません。",
     options: []
   },
 
@@ -640,45 +727,123 @@
   recruit: {
     text: "採用・ボランティア情報：情熱を持つあなたをお待ちしています。年齢・経験は不問です。",
     options: []
-  },
+  }
+};
+
+
 
   // --- Application
   application: {
     text: "申込についてですね。ご希望の内容をお選びください：",
     options: [
-      { label: "チケット申込", next: "ticket" },
-      { label: "スクール／アカデミー申込", next: "schoolGender" },
-      { label: "グッズ購入", next: "goods" },
-      { label: "ファンクラブ入会", next: "fanclub" }
+      { label: "チケット申込", next: "ticketType" },
+      { label: "スクール／アカデミー申込", next: "schoolAcademySelection" },
+      { label: "グッズ購入", next: "goodsCategory" },
+      { label: "ファンクラブ入会", next: "fanclubType" }
     ]
-  },
-  ticket: {
-    text: "チケット申込ですね。\n\n自由席・指定席・団体席がございます。早めのご予約がおすすめです。\nお支払い方法はクレカ・コンビニ・LINE Payなど選べます。",
-    options: []
-  },
-  goods: {
-    text: "グッズ購入についてですね。\n\n選手の背番号入りユニフォーム、応援タオル、火星名物・赤土クッキーなど、多数ご用意しています。\nサイズや数量もお選びいただけます。",
-    options: []
-  },
-  fanclub: {
-    text: "ファンクラブ入会について：ライト／スタンダード／VIPの3種。会員特典には限定グッズやイベント参加券があります。",
-    options: []
   },
   
-  // --- School flow
-  schoolGender: {
-    text: "アカデミーに参加される方の性別を選択してください。",
+  // --- Ticket
+  ticketType: {
+    text: "ご希望のチケット種類を選んでください：",
     options: [
-      { label: "女子", next: "school" },
-      { label: "男子", next: "school" }
+      { label: "自由席", next: "ticketFree" },
+      { label: "指定席", next: "ticketReserved" },
+      { label: "団体席", next: "ticketGroup" }
     ]
   },
-  school: {
+  ticketFree: {
+    text: "自由席：エリア内で自由に観戦可能です。お早めのご入場をおすすめします。",
+    options: []
+  },
+  ticketReserved: {
+    text: "指定席：座席を事前に確保できます。お好きなエリアを選んでください。",
+    options: []
+  },
+  ticketGroup: {
+    text: "団体席：10名以上のご利用でお得な割引あり。団体応援や遠征にも最適です。",
+    options: []
+  },
+
+  // --- Goods
+  goodsCategory: {
+    text: "ご希望のグッズカテゴリを選んでください：",
+    options: [
+      { label: "ユニフォーム関連", next: "goodsUniform" },
+      { label: "応援グッズ", next: "goodsSupport" },
+      { label: "火星名物グッズ", next: "goodsSouvenir" }
+    ]
+  },
+  goodsUniform: {
+    text: "選手の背番号入りユニフォームは全サイズ対応。着るだけで気分も実力もアップ！？",
+    options: []
+  },
+  goodsSupport: {
+    text: "応援タオル、ホイッスル、光るスティックなど試合を熱く盛り上げるアイテムを多数用意！",
+    options: []
+  },
+  goodsSouvenir: {
+    text: "火星名物・赤土クッキーや重力ゼリーなど、地球では味わえない逸品をお土産にどうぞ！",
+    options: []
+  },
+
+  // --- Fanclub
+  fanclubType: {
+    text: "入会ご希望のプランをお選びください：",
+    options: [
+      { label: "ライト会員", next: "fanclubLight" },
+      { label: "スタンダード会員", next: "fanclubStandard" },
+      { label: "VIP会員", next: "fanclubVIP" }
+    ]
+  },
+  fanclubLight: {
+    text: "ライト会員：入会金無料。試合速報や選手ブログなどの限定情報が読めるベーシックプランです。",
+    options: []
+  },
+  fanclubStandard: {
+    text: "スタンダード会員：試合後インタビュー動画、年1グッズプレゼントなど特典満載の中核プラン。",
+    options: []
+  },
+  fanclubVIP: {
+    text: "VIP会員：選手との交流会やプレミアムグッズなど夢のような特典が揃った特別プランです。",
+    options: []
+  },
+
+  // --- School / Academy
+  schoolAcademySelection: {
+    text: "ご希望のコースと性別を選択してください：",
+    options: [
+      { label: "スクール（女子）", next: "schoolGirls" },
+      { label: "スクール（男子）", next: "schoolBoys" },
+      { label: "アカデミー（女子）", next: "academyGirls" },
+      { label: "アカデミー（男子）", next: "academyBoys" }
+    ]
+  },
+  schoolGirls: {
     text: "このスクールは、君をプロへと導くスタートラインだ……！\n\n夢を本気で掴みに来い。きらめく未来のピッチが、今ここから始まる。",
     options: [
       { label: "🌟 進む（スクール申込へ）", next: "lineGuide", style: "font-weight:bold; background: linear-gradient(to right, gold, orange); border-radius: 10px; padding: 0.5em 1em;" }
     ]
   },
+  schoolBoys: {
+    text: "君の挑戦が始まる。火星最高のコーチ陣とともに、基礎から応用まで全力でサポートします。",
+    options: [
+      { label: " 申込を進める", next: "lineGuide" }
+    ]
+  },
+  academyGirls: {
+    text: "アカデミー女子コースは、技術・戦術・人間力を磨く本格育成プログラム。新時代の主役は君だ。",
+    options: [
+      { label: " 申込を進める", next: "lineGuide" }
+    ]
+  },
+  academyBoys: {
+    text: "アカデミー男子コースは、火星代表を目指す精鋭の集い。高い志と挑戦心が未来を切り拓く。",
+    options: [
+      { label: " 申込を進める", next: "lineGuide" }
+    ]
+  },
+
   lineGuide: {
     text: "ありがとうございます！あなたの挑戦が始まります。担当者からのご連絡をお待ちください！",
     options: []
