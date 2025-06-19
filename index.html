@@ -505,11 +505,12 @@
         document.getElementById(tab).classList.add('active');
       });
     });
+document.addEventListener("DOMContentLoaded", () => {
+  const img = document.getElementById("kaseno-img");
+  const popup = document.getElementById("popup");
+  let pressTimer;
 
-    const img = document.getElementById("kaseno-img");
-    const popup = document.getElementById("popup");
-    let pressTimer;
-
+  if (img && popup) {
     img.addEventListener("touchstart", (e) => {
       const rect = img.getBoundingClientRect();
       const touch = e.touches[0];
@@ -528,6 +529,8 @@
     img.addEventListener("touchend", () => {
       clearTimeout(pressTimer);
     });
+  }
+});
 
  // --- チャット履歴
 function updateFlags(currentKey) {
