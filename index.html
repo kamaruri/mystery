@@ -901,10 +901,14 @@ function goTo(key) {
 
 function goBack() {
   if (history.length === 0) return;
-  updateHistory("back"); // 🔑 秘密ルート用に履歴記録
-  currentNode = history.pop(); // 🔁 直前に戻る
-  renderChat(currentNode);     // 💬 再表示
+
+  updateHistory("back"); // 🗝️ 秘密ルート検出用（履歴に "back" を追加）
+  
+  const prev = history.pop();   // 1つ前に戻る（currentNodeを1つ巻き戻す）
+  currentNode = prev;
+  renderChat(currentNode);      // 表示更新
 }
+
 
 function startChat() {
     openChat();  // 既存の関数を呼ぶだけ
