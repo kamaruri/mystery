@@ -899,24 +899,39 @@ function renderChat(stateKey) {
 }
 
      // --- chat戻るボタン
+let currentNode = "start"; // 初期化を必ず
+let chatHistory = [];
+
 let chatHistory = [];
 
 function showNode(nodeKey) {
   const node = chatData[nodeKey];
   if (!node) return;
 
-  // 履歴に追加（戻る時は追加しない処理も可能）
-  if (currentNode !== nodeKey) chatHistory.push(currentNode);
+  // 履歴に保存（同じノードへの再表示は除外）
+  if (currentNode && currentNode !== nodeKey) {
+    chatHistory.push(currentNode);
+  }
+
+  // 隠しルートの判定ロジック更新
+  chatData.updateFlags(nodeKey);
 
   currentNode = nodeKey;
-  // 画面に node.text と node.options を表示する処理
+
+  // ノード内容を描画（仮の処理、ここにUI描画を入れる）
+  displayChat(node.text, node.options);
 }
 
+
 function goBack() {
+  if (chatHistory.length === 0) return;
+
   const prev = chatHistory.pop();
-  if (prev) {
-    showNode(prev);
-  }
+
+  // フラグとして "back" も履歴に残す（隠しルート判定のため）
+  chatData.updateFlags("back");
+
+  showNode(prev);
 }
 
   </script>
