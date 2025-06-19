@@ -528,15 +528,14 @@
     img.addEventListener("touchend", () => {
       clearTimeout(pressTimer);
     });
-
-
-  　  // --- 隠しルートフラグ ---
+  
+   const chatData = {
+      // --- 隠しルート
   _flags: {
     secretUnlocked: false,
     history: []
   },
-    
-  // --- 共通関数
+
   updateFlags: function (currentKey) {
     const f = this._flags;
     f.history.push(currentKey);
@@ -547,8 +546,7 @@
     const matched = pattern.every((val, idx) => val === actual[idx]);
     if (matched) f.secretUnlocked = true;
   },
-  
-   const chatData = {
+
   start: {
     text: "どんなお問い合わせですか？以下から選んでください：",
     options: [
@@ -559,7 +557,6 @@
       { label: "申込について", next: "application" }
     ]
   }
-     
   // --- Players
   players: {
     text: "選手についてご興味ありがとうございます。どういった情報をお求めですか？",
@@ -875,7 +872,7 @@
 
 function startChat() {
   document.getElementById('chatPopup').style.display = 'block';
-  renderChat('start');
+  showNode('start'); // ←フラグ・履歴を管理しつつ描画できる
 }
 
 function closeChat() {
@@ -885,25 +882,28 @@ function closeChat() {
 function renderChat(stateKey) {
   const state = chatData[stateKey];
   const chatBox = document.getElementById('chatBox');
+
   let html = `
     <div class="chat-bubble bot">
       ${state.text.replace(/\n/g, '<br>')}
     </div>
   `;
-  for (const opt of state.options) {
+
+  const options = typeof state.options === 'function' ? state.options() : state.options || [];
+
+  for (const opt of options) {
     html += `
       <div class="chat-bubble user">
-        <button onclick="renderChat('${opt.next}')" style="${opt.style || ''}">${opt.label}</button>
+        <button onclick="showNode('${opt.next}')" style="${opt.style || ''}">${opt.label}</button>
       </div>
     `;
   }
+
   chatBox.innerHTML = html;
 }
 
      // --- chat戻るボタン
 let currentNode = "start"; // 初期化を必ず
-let chatHistory = [];
-
 let chatHistory = [];
 
 function showNode(nodeKey) {
@@ -921,7 +921,7 @@ function showNode(nodeKey) {
   currentNode = nodeKey;
 
   // ノード内容を描画（仮の処理、ここにUI描画を入れる）
-  displayChat(node.text, node.options);
+  renderChat(nodeKey);
 }
 
 
