@@ -528,7 +528,20 @@
     img.addEventListener("touchend", () => {
       clearTimeout(pressTimer);
     });
-  
+
+ // --- チャット履歴
+function updateFlags(currentKey) {
+  const f = chatData._flags; // ← this._flags を chatData._flags に修正
+  f.history.push(currentKey);
+  if (f.history.length > 7) f.history.shift();
+
+  const pattern = ["players", "back", "application", "schoolAcademySelection", "back", "schoolAcademySelection"];
+  const actual = f.history.slice(-pattern.length);
+  const matched = pattern.every((val, idx) => val === actual[idx]);
+
+  if (matched) f.secretUnlocked = true;
+}
+
    const chatData = {
       // --- 隠しルート
   _flags: {
@@ -536,17 +549,18 @@
     history: []
   },
 
-  updateFlags: function (currentKey) {
-    const f = this._flags;
-    f.history.push(currentKey);
-    if (f.history.length > 7) f.history.shift();
+function closeChat() {
+  document.getElementById('chatPopup').style.display = 'none';
 
-    const pattern = ["players", "back", "application", "schoolAcademySelection", "back", "schoolAcademySelection"];
-    const actual = f.history.slice(-pattern.length);
-    const matched = pattern.every((val, idx) => val === actual[idx]);
-    if (matched) f.secretUnlocked = true;
-  },
-
+  // 状態を完全リセット
+  currentNode = "start";
+  chatHistory = [];
+  chatData._flags = {
+    secretUnlocked: false,
+    history: []
+  };
+}
+     
   start: {
     text: "どんなお問い合わせですか？以下から選んでください：",
     options: [
@@ -865,7 +879,7 @@
   lineGuide: {
     text: "ありがとうございます！あなたの挑戦が始まります。担当者からのご連絡をお待ちください！",
     options: []
-  },
+  }
 };
   
 
@@ -916,7 +930,7 @@ function showNode(nodeKey) {
   }
 
   // 隠しルートの判定ロジック更新
-  chatData.updateFlags(nodeKey);
+  updateFlags(nodeKey); 
 
   currentNode = nodeKey;
 
@@ -931,7 +945,7 @@ function goBack() {
   const prev = chatHistory.pop();
 
   // フラグとして "back" も履歴に残す（隠しルート判定のため）
-  chatData.updateFlags("back");
+  updateFlags("back"); 
 
   showNode(prev);
 }
