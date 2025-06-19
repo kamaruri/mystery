@@ -470,10 +470,11 @@
   </div>
   
   <div id="chatPopup">
-    <div style="text-align: right;"><button onclick="closeChat()">❌ 閉じる</button></div>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
     <button onclick="goBack()">⬅ 戻る</button>
-    <div id="chatBox"></div>
+    <button onclick="closeChat()">❌ 閉じる</button>
   </div>
+  <div id="chatBox"></div>
 </div>
   
   <script>
@@ -528,24 +529,13 @@
       clearTimeout(pressTimer);
     });
 
-   const chatData = {
-  start: {
-    text: "こんにちは！どんなお問い合わせですか？以下から選んでください：",
-    options: [
-      { label: "選手について", next: "players" },
-      { label: "アクセス・場所について", next: "access" },
-      { label: "イベント・楽しみ", next: "events" },
-      { label: "クラブについて", next: "club" },
-      { label: "申込について", next: "application" }
-    ]
-  },
 
-　  // --- 隠しルートフラグ ---
+  　  // --- 隠しルートフラグ ---
   _flags: {
     secretUnlocked: false,
     history: []
   },
-
+    
   // --- 共通関数
   updateFlags: function (currentKey) {
     const f = this._flags;
@@ -557,6 +547,18 @@
     const matched = pattern.every((val, idx) => val === actual[idx]);
     if (matched) f.secretUnlocked = true;
   },
+  
+   const chatData = {
+  start: {
+    text: "どんなお問い合わせですか？以下から選んでください：",
+    options: [
+      { label: "選手について", next: "players" },
+      { label: "アクセス・場所について", next: "access" },
+      { label: "イベント・楽しみ", next: "events" },
+      { label: "クラブについて", next: "club" },
+      { label: "申込について", next: "application" }
+    ]
+  }
      
   // --- Players
   players: {
