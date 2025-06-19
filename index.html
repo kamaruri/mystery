@@ -532,28 +532,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
- let history = [];
-let secretUnlocked = false;
-let currentNode = "start";
+ // --- チャット履歴
+function updateFlags(currentKey) {
+  const f = chatData._flags; // ← this._flags を chatData._flags に修正
+  f.history.push(currentKey);
+  if (f.history.length > 7) f.history.shift();
 
-const patternToUnlock = [
-  "players",
-  "back",
-  "application",
-  "schoolAcademySelection",
-  "back",
-  "schoolAcademySelection"
-];
+  const pattern = ["players", "back", "application", "schoolAcademySelection", "back", "schoolAcademySelection"];
+  const actual = f.history.slice(-pattern.length);
+  const matched = pattern.every((val, idx) => val === actual[idx]);
 
-function updateHistory(key) {
-  history.push(key);
-  if (history.length > 10) history.shift();
-
-  const recent = history.slice(-patternToUnlock.length);
-  secretUnlocked = patternToUnlock.every((val, idx) => val === recent[idx]);
+  if (matched) f.secretUnlocked = true;
 }
 
    const chatData = {
+      // --- 隠しルート
+  _flags: {
+    secretUnlocked: false,
+    history: []
+  },
      
   start: {
     text: "どんなお問い合わせですか？以下から選んでください：",
@@ -830,20 +827,21 @@ function updateHistory(key) {
   },
 
   // --- School / Academy
-   schoolAcademySelection: {
-    text: "コースと性別をお選びください：",
+  schoolAcademySelection: {
+    text: "ご希望のコースと性別を選択してください：",
     get options() {
+      const f = chatData._flags;
       const opts = [
         { label: "スクール（男子）", next: "schoolBoys" },
         { label: "アカデミー（女子）", next: "academyGirls" },
         { label: "アカデミー（男子）", next: "academyBoys" }
       ];
-      if (secretUnlocked) {
+      if (f.secretUnlocked) {
         opts.unshift({ label: "スクール（女子）", next: "schoolGirls" });
       }
       return opts;
     }
-   },
+  },
   schoolGirls: {
     text: "このスクールは、君をプロへと導くスタートラインだ……！\n\n夢を本気で掴みに来い。きらめく未来のピッチが、今ここから始まる。",
     options: [
@@ -875,60 +873,87 @@ function updateHistory(key) {
   }
 };
   
+function closeChat() {
+  document.getElementById('chatPopup').style.display = 'none';
 
-// --- UI 操作
-function renderChat(key) {
-  const chatBox = document.getElementById("chatBox");
-  const node = chatData[key];
-  if (!node) return;
+  // 状態を完全リセット
+  currentNode = "start";
+  chatHistory = [];
+  chatData._flags = {
+    secretUnlocked: false,
+    history: []
+  };
+}
 
-  let html = `<div class='chat-bubble bot'>${node.text}</div>`;
-  const options = typeof node.options === "function" ? node.options : node.options || [];
-  options.forEach(opt => {
-    html += `<div class='chat-bubble user'><button onclick="goTo('${opt.next}')">${opt.label}</button></div>`;
-  });
+function startChat() {
+  document.getElementById('chatPopup').style.display = 'block';
+  showNode('start'); // ←フラグ・履歴を管理しつつ描画できる
+}
+
+function renderChat(stateKey) {
+  const state = chatData[stateKey];
+  const chatBox = document.getElementById('chatBox');
+
+  let html = `
+    <div class="chat-bubble bot">
+      ${state.text.replace(/\n/g, '<br>')}
+    </div>
+  `;
+
+  const options = typeof state.options === 'function' ? state.options() : state.options || [];
+
+  for (const opt of options) {
+    html += `
+      <div class="chat-bubble user">
+        <button onclick="showNode('${opt.next}')" style="${opt.style || ''}">${opt.label}</button>
+      </div>
+    `;
+  }
 
   chatBox.innerHTML = html;
 }
 
-function goTo(key) {
-  if (currentNode !== "start") updateHistory(currentNode); // ✅ start画面は履歴に入れない
-  currentNode = key;
-  renderChat(key);
-}
+     // --- chat戻るボタン
+let currentNode = "start"; // 初期化を必ず
+let chatHistory = [];
 
+function showNode(nodeKey) {
+  const node = chatData[nodeKey];
+  if (!node) return;
+
+  // 履歴に保存（同じノードへの再表示は除外）
+  if (currentNode && currentNode !== nodeKey) {
+    chatHistory.push(currentNode);
+  }
+
+  // --- ① updateFlags() を先に実行
+  updateFlags(nodeKey);
+
+  // --- ② currentNode を更新
+  currentNode = nodeKey;
+
+  // --- ③ node.options を再取得するため、再代入が必要
+  if (typeof node.options === "function") {
+    node.options = node.options(); // ← この1行がキモ！
+  }
+
+  // --- ④ ノード内容を描画
+  renderChat(nodeKey);
+}
 
 
 
 function goBack() {
-  if (history.length === 0) return;
+  if (chatHistory.length === 0) return;
 
-  updateHistory("back"); // 🗝️ 秘密ルート検出用（履歴に "back" を追加）
-  
-  const prev = history.pop();   // 1つ前に戻る（currentNodeを1つ巻き戻す）
-  currentNode = prev;
-  renderChat(currentNode);      // 表示更新
+  const prev = chatHistory.pop();
+
+  // フラグとして "back" も履歴に残す（隠しルート判定のため）
+  updateFlags("back"); 
+
+  showNode(prev);
 }
 
-
-function startChat() {
-    openChat();  // 既存の関数を呼ぶだけ
-  }
-    
-function openChat() {
-  document.getElementById("chatPopup").style.display = "block";
-  history = [];
-  secretUnlocked = false;
-  currentNode = "start";
-  renderChat("start");
-}
-
-function closeChat() {
-  document.getElementById("chatPopup").style.display = "none";
-  history = [];
-  secretUnlocked = false;
-  currentNode = "start";
-}
   </script>
 </body>
 </html>
