@@ -926,14 +926,21 @@ function showNode(nodeKey) {
     chatHistory.push(currentNode);
   }
 
-  // 隠しルートの判定ロジック更新
-  updateFlags(nodeKey); 
+  // --- ① updateFlags() を先に実行
+  updateFlags(nodeKey);
 
+  // --- ② currentNode を更新
   currentNode = nodeKey;
 
-  // ノード内容を描画（仮の処理、ここにUI描画を入れる）
+  // --- ③ node.options を再取得するため、再代入が必要
+  if (typeof node.options === "function") {
+    node.options = node.options(); // ← この1行がキモ！
+  }
+
+  // --- ④ ノード内容を描画
   renderChat(nodeKey);
 }
+
 
 
 function goBack() {
