@@ -892,10 +892,12 @@ function renderChat(key) {
 }
 
 function goTo(key) {
-  updateHistory(key);
+  updateHistory(currentNode); // 🔧 今いるノードを履歴に記録
+  updateHistory(key);         // 👣 選択肢を記録（秘密ルート用）
   currentNode = key;
   renderChat(key);
 }
+
 
 function goBack() {
   if (history.length === 0) return;
