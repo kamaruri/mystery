@@ -892,10 +892,11 @@ function renderChat(key) {
 }
 
 function goTo(key) {
-  updateHistory(currentNode); // 今いる場所だけ記録
+  if (currentNode !== "start") updateHistory(currentNode); // ✅ start画面は履歴に入れない
   currentNode = key;
   renderChat(key);
 }
+
 
 
 
