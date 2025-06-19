@@ -471,6 +471,7 @@
   
   <div id="chatPopup">
     <div style="text-align: right;"><button onclick="closeChat()">❌ 閉じる</button></div>
+    <button onclick="goBack()">⬅ 戻る</button>
     <div id="chatBox"></div>
   </div>
 </div>
@@ -539,6 +540,24 @@
     ]
   },
 
+　  // --- 隠しルートフラグ ---
+  _flags: {
+    secretUnlocked: false,
+    history: []
+  },
+
+  // --- 共通関数
+  updateFlags: function (currentKey) {
+    const f = this._flags;
+    f.history.push(currentKey);
+    if (f.history.length > 7) f.history.shift();
+
+    const pattern = ["players", "back", "application", "schoolAcademySelection", "back", "schoolAcademySelection"];
+    const actual = f.history.slice(-pattern.length);
+    const matched = pattern.every((val, idx) => val === actual[idx]);
+    if (matched) f.secretUnlocked = true;
+  },
+     
   // --- Players
   players: {
     text: "選手についてご興味ありがとうございます。どういった情報をお求めですか？",
@@ -806,12 +825,18 @@
   // --- School / Academy
   schoolAcademySelection: {
     text: "ご希望のコースと性別を選択してください：",
-    options: [
-      { label: "スクール（女子）", next: "schoolGirls" },
-      { label: "スクール（男子）", next: "schoolBoys" },
-      { label: "アカデミー（女子）", next: "academyGirls" },
-      { label: "アカデミー（男子）", next: "academyBoys" }
-    ]
+    get options() {
+      const f = chatData._flags;
+      const opts = [
+        { label: "スクール（男子）", next: "schoolBoys" },
+        { label: "アカデミー（女子）", next: "academyGirls" },
+        { label: "アカデミー（男子）", next: "academyBoys" }
+      ];
+      if (f.secretUnlocked) {
+        opts.unshift({ label: "スクール（女子）", next: "schoolGirls" });
+      }
+      return opts;
+    }
   },
   schoolGirls: {
     text: "このスクールは、君をプロへと導くスタートラインだ……！\n\n夢を本気で掴みに来い。きらめく未来のピッチが、今ここから始まる。",
@@ -871,6 +896,27 @@ function renderChat(stateKey) {
     `;
   }
   chatBox.innerHTML = html;
+}
+
+     // --- chat戻るボタン
+let chatHistory = [];
+
+function showNode(nodeKey) {
+  const node = chatData[nodeKey];
+  if (!node) return;
+
+  // 履歴に追加（戻る時は追加しない処理も可能）
+  if (currentNode !== nodeKey) chatHistory.push(currentNode);
+
+  currentNode = nodeKey;
+  // 画面に node.text と node.options を表示する処理
+}
+
+function goBack() {
+  const prev = chatHistory.pop();
+  if (prev) {
+    showNode(prev);
+  }
 }
 
   </script>
