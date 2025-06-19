@@ -887,9 +887,7 @@ function renderChat(key) {
   options.forEach(opt => {
     html += `<div class='chat-bubble user'><button onclick="goTo('${opt.next}')">${opt.label}</button></div>`;
   });
-  if (history.length > 0) {
-    html += `<div class='chat-bubble user'><button onclick="goBack()">◀ 戻る</button></div>`;
-  }
+
   chatBox.innerHTML = html;
 }
 
@@ -901,9 +899,9 @@ function goTo(key) {
 
 function goBack() {
   if (history.length === 0) return;
-  updateHistory("back");
-  currentNode = history.pop();
-  renderChat(currentNode);
+  updateHistory("back"); // 🔑 秘密ルート用に履歴記録
+  currentNode = history.pop(); // 🔁 直前に戻る
+  renderChat(currentNode);     // 💬 再表示
 }
 
 function startChat() {
