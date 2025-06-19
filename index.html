@@ -548,18 +548,6 @@ function updateFlags(currentKey) {
     secretUnlocked: false,
     history: []
   },
-
-function closeChat() {
-  document.getElementById('chatPopup').style.display = 'none';
-
-  // 状態を完全リセット
-  currentNode = "start";
-  chatHistory = [];
-  chatData._flags = {
-    secretUnlocked: false,
-    history: []
-  };
-}
      
   start: {
     text: "どんなお問い合わせですか？以下から選んでください：",
@@ -882,7 +870,17 @@ function closeChat() {
   }
 };
   
+function closeChat() {
+  document.getElementById('chatPopup').style.display = 'none';
 
+  // 状態を完全リセット
+  currentNode = "start";
+  chatHistory = [];
+  chatData._flags = {
+    secretUnlocked: false,
+    history: []
+  };
+}
 
 function startChat() {
   document.getElementById('chatPopup').style.display = 'block';
