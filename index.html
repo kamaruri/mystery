@@ -906,6 +906,10 @@ function goBack() {
   renderChat(currentNode);
 }
 
+function startChat() {
+    openChat();  // 既存の関数を呼ぶだけ
+  }
+    
 function openChat() {
   document.getElementById("chatPopup").style.display = "block";
   history = [];
