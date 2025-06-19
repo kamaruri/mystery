@@ -887,10 +887,6 @@ function startChat() {
   showNode('start'); // ←フラグ・履歴を管理しつつ描画できる
 }
 
-function closeChat() {
-  document.getElementById('chatPopup').style.display = 'none';
-}
-
 function renderChat(stateKey) {
   const state = chatData[stateKey];
   const chatBox = document.getElementById('chatBox');
