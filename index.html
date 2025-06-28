@@ -94,17 +94,23 @@
       border-bottom: 2px solid var(--accent);
     }
 
-    nav button {
-      flex: 1;
-      padding: 1rem;
-      font-size: 1rem;
-      font-weight: bold;
-      color: white;
-      background: none;
-      border: none;
-      cursor: pointer;
-      white-space: nowrap;
-    }
+nav button {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: normal;          /* ← 2行OKにする */
+  text-align: center;           /* ← 水平中央揃え */
+  display: flex;                /* ← 中央揃えのためflexに */
+  align-items: center;          /* ← 垂直中央揃え */
+  justify-content: center;      /* ← 水平中央揃え */
+  text-wrap: balance;           /* （対応ブラウザのみ）読みやすい改行 */
+}
+
 
      /* タブの背景色を順番で指定（赤、橙、黄、緑、青、藍、紫） */
  nav button:nth-child(1) { background-color: rgba(255, 0, 0, 0.3); }     /* 赤 */
@@ -301,14 +307,13 @@
 <body>
   <header>アイナック神戸応援サイト_謎解き</header>
   <nav id="tab-buttons">
-    <button class="active" data-tab="news">ニュース</button>
-    <button data-tab="schedule">試合日程・結果&練習</button>
-    <button data-tab="players">選手・スタッフ</button>
-    <button data-tab="ticket">チケット</button>
-    <button data-tab="stadium">スタジアム</button>
-    <button data-tab="fan">ファンゾーン</button>
-    <button data-tab="school">スクール</button>
-    <button data-tab="inquiry">お問い合わせ</button>
+    <button class="active" data-tab="news">Report<br>ニュース</button>
+    <button data-tab="players">Athlete<br>選手・スタッフ</button>
+    <button data-tab="ticket">Invite<br>チケット</button>
+    <button data-tab="school">Next<br>スクール</button>
+    <button data-tab="stadium">Base<br>スタジアム</button>
+    <button data-tab="fan">On-line<br>ファン活動</button>
+    <button data-tab="inquiry">Window<br>お問い合わせ</button>
   </nav>
 
   <div id="news" class="content-section active">
@@ -322,20 +327,6 @@
       <img id="kaseno-img" src="https://github.com/kamaruri/public-assets/blob/main/%E8%83%8C%E4%B8%AD%E3%82%92%E5%90%91%E3%81%91%E3%81%9F%E9%81%B8%E6%89%8B%E3%81%A7%E5%B7%A6%E5%8F%B3%E3%81%AB%E8%83%8C%E6%99%AF%E3%81%82%E3%82%8Apng.jpg?raw=true" alt="火星野つばさの後ろ姿">
       <div id="popup">背中を押してくれてありがとう！<br>ファイトと送信しよう！</div>
     </div>
-  </div>
-
-  <div id="schedule" class="content-section">
-    <h2>試合日程・結果＆練習</h2>
-    <p>
-      🔹<strong>次回試合：</strong>6月22日（土）18:00キックオフ<br>
-      レオネッサ・ギャラクシア vs 金星クルセイダーズ（＠火星陸ドーム）<br><br>
-      🔸<strong>直近の試合結果：</strong><br>
-      6月15日：○ 3-1 木星レイダース<br>
-      6月8日：△ 0-0 地球スターズ<br><br>
-      🔧<strong>練習内容：</strong><br>
-      6月10日〜14日：AIトラッキングによる個別戦術強化メニュー実施。ピッチ脇にはARコーチングゾーンを導入し、選手一人ひとりに即時フィードバックを提供。<br>
-      特に火星野つばさ選手はコンディション最高評価を記録。
-    </p>
   </div>
 
   <div id="players" class="content-section">
