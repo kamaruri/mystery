@@ -106,6 +106,34 @@
       white-space: nowrap;
     }
 
+     /* タブの背景色を順番で指定（赤、橙、黄、緑、青、藍、紫） */
+ nav button:nth-child(1) { background-color: rgba(255, 0, 0, 0.3); }     /* 赤 */
+ nav button:nth-child(2) { background-color: rgba(255, 165, 0, 0.3); }   /* オレンジ */
+ nav button:nth-child(3) { background-color: rgba(255, 255, 0, 0.3); }   /* 黄 */
+ nav button:nth-child(4) { background-color: rgba(0, 128, 0, 0.3); }     /* 緑 */
+ nav button:nth-child(5) { background-color: rgba(0, 0, 255, 0.3); }     /* 青 */
+ nav button:nth-child(6) { background-color: rgba(75, 0, 130, 0.3); }    /* 藍 */
+ nav button:nth-child(7) { background-color: rgba(128, 0, 128, 0.3); }   /* 紫 */
+ nav button:nth-child(8) { background-color: rgba(199, 21, 133, 0.3); }  /* お問い合わせ（赤紫系） */
+
+ /* アクティブ時は透明度を下げて強調表示 */
+ nav button.active:nth-child(1) { background-color: rgba(255, 0, 0, 0.8); }
+ nav button.active:nth-child(2) { background-color: rgba(255, 165, 0, 0.8); }
+ nav button.active:nth-child(3) { background-color: rgba(255, 255, 0, 0.8); color: black; }
+ nav button.active:nth-child(4) { background-color: rgba(0, 128, 0, 0.8); }
+ nav button.active:nth-child(5) { background-color: rgba(0, 0, 255, 0.8); }
+ nav button.active:nth-child(6) { background-color: rgba(75, 0, 130, 0.8); }
+ nav button.active:nth-child(7) { background-color: rgba(128, 0, 128, 0.8); }
+ nav button.active:nth-child(8) { background-color: rgba(199, 21, 133, 0.8); }
+
+    
+   nav button:hover {
+  filter: brightness(1.2);  /* 明るくなる */
+  transform: scale(1.02);   /* 少し大きくなる */
+  transition: all 0.2s ease;
+}
+
+    
     nav button.active {
       background-color: var(--accent);
     }
@@ -279,9 +307,7 @@
     <button data-tab="ticket">チケット</button>
     <button data-tab="stadium">スタジアム</button>
     <button data-tab="fan">ファンゾーン</button>
-    <button data-tab="academy">アカデミー</button>
     <button data-tab="school">スクール</button>
-    <button data-tab="town">ホームタウン活動</button>
     <button data-tab="inquiry">お問い合わせ</button>
   </nav>
 
@@ -289,7 +315,7 @@
     <h2 style="font-size: 2.5rem; border-left: 6px solid crimson; padding-left: 0.5rem; letter-spacing: 2px;">🚨 NEWS</h2>
     <article style="max-width: 700px; margin: 2rem auto; font-size: 1.1rem; line-height: 2;">
       <p style="border-left: 4px solid #ccc; padding-left: 1rem;">【2025.06.01】火星野つばさ、新たな挑戦を宣言。クラブ「レオネッサ・ギャラクシア」は、キャプテン火星野つばさの引退発表とともに、次代への布石としてアカデミー強化方針を発表。</p>
-      <p style="font-style: italic; text-align: center; margin-top: 1rem;">「夢を見せる責任を、次の世代に手渡したい」</p>
+      <p style="font-style: italic; text-align: center; margin-top: 1rem;">『わたしのプレーで沸かすよ』</p>
       <p>この言葉に、会場は静まり返り、多くのファンが涙した。</p>
     </article>
     <div class="interview-image">
@@ -316,9 +342,9 @@
     <h2>選手・スタッフ</h2>
     <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
       <div style="flex: 1; min-width: 250px; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 1rem;">
-        <h3>#10 火星野つばさ（FW／キャプテン）</h3>
+        <h3>#100 火星野つばさ（FW／キャプテン）</h3>
         <p>
-          ピッチでは絶対的エース。試合中の無言の背中は「走れ」のメッセージ。2025シーズンは全試合出場中。趣味は「星空の観察」だが、戦術ノートには毎試合膨大なメモが残る。
+          ピッチでは絶対的エース。試合中の無言の背中は「パスをくれ！」の合図。2024シーズンは全試合出場中。勇気あふれるプレーからニックネームは「ライオン」🦁。決め台詞の通り、観客はいつも沸いている。
         </p>
       </div>
       <div style="flex: 1; min-width: 250px; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 1rem;">
@@ -387,22 +413,7 @@
       月額500火星ドルで、試合後の選手インタビュー視聴、限定グッズの先行購入、火星野選手による直筆メッセージ入りカードなどが受け取れるプレミアム体験が可能です。
     </p>
   </div>
-
-  <div id="academy" class="content-section">
-    <h2>アカデミー</h2>
-    <p>
-      🔭<strong>ギャラクシア育成アカデミー</strong><br>
-      地球から火星へ、宇宙時代の人材を育てる。10歳〜18歳の選手を対象に、AIと連携した個別育成プログラムを採用。技術・戦術に加え、スポーツマンシップや宇宙倫理教育にも力を入れています。<br><br>
-
-      🔄<strong>進路支援：</strong><br>
-      卒業後はトップチーム昇格、宇宙リーグトライアル、学術機関推薦など多彩な進路実績。
-    </p>
-    <p>
-      🧭<strong>国際連携：</strong><br>
-      地球連邦アカデミーや金星ユースリーグとの交換プログラムにより、選手たちは多様な環境に触れながら視野を広げることができます。
-    </p>
-  </div>
-
+  
   <div id="school" class="content-section">
     <h2>スクール</h2>
     <p>
@@ -420,23 +431,6 @@
       毎月第3日曜には、地球・火星それぞれで保護者対象のスポーツ教育セミナーを開催。火星野選手自身が語る「挫折と再起」の講話が人気です。
     </p>
   </div>
-
-  <div id="town" class="content-section">
-    <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">🌈 ホームタウン活動</h2>
-    <blockquote style="font-style: italic; font-size: 1.3rem; color: #444; margin: 2rem auto; max-width: 700px;">
-      応援される存在から、<br>
-      共に歩む存在へ。
-    </blockquote>
-    <div style="max-width: 700px; margin: auto; line-height: 2;">
-      <p>火星野選手が中心となって取り組む「M-ecoプロジェクト」は、火星赤道エリアの環境保全と再生可能エネルギー啓発を軸とする地域密着型活動。</p>
-      <p><strong>主な取り組み：</strong><br>
-      ・子どもたちへのスポーツ授業支援（仮設教室×VR）<br>
-      ・火星ゴミゼロキャンペーンの先導<br>
-      ・月1回の清掃活動＋リサイクルアート展開催</p>
-      <p>📚 学校連携プログラム：地元の教育機関と連携し、「宇宙で生きる力」をテーマにした特別授業を定期開催。</p>
-    </div>
-  </div>
-
 
 <div id="inquiry" class="content-section">
   <h2 style="font-size: 2rem; margin-bottom: 1rem;">📩 お問い合わせチャット</h2>
