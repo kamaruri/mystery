@@ -104,7 +104,8 @@ nav button {
   cursor: pointer;
   white-space: normal;
   text-align: center;
-  display: flex;
+  display: inline-block;  /* ← flexをやめて自動幅に */
+  min-width: max-content; /* ← 内容の最長行に幅を合わせる */
   align-items: center;
   justify-content: center;
 }
